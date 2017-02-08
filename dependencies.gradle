@@ -1,0 +1,35 @@
+ext {
+    supportLibraryVersion = '24.2.0'
+    aupportV4 = "19.1.0"
+    retrofitVersion = '2.1.0'
+    rxJaveAndroidVersion = '1.1.0'
+    okhttpVersion = '3.5.0'
+    frescoVersion = "1.0.0"
+    constraintlayoutVersion = '1.0.0-beta4'
+    dependencies = [
+            appCompat            : "com.android.support:appcompat-v7:$supportLibraryVersion",
+            support              : "com.android.support:support-v4:$aupportV4",
+            design               : "com.android.support:design:$supportLibraryVersion",
+            cardView             : "com.android.support:cardview-v7:$supportLibraryVersion",
+            rxJava               : "io.reactivex:rxjava:$rxJaveAndroidVersion",
+            rxAndroid            : "io.reactivex:rxandroid:$rxJaveAndroidVersion",
+            retorfit             : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitConverterGson: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            retrofitAdapterRxJava: "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
+            jUnit                : "junit:junit:4.12",
+            okhttp               : "com.squareup.okhttp3:okhttp:$okhttpVersion",
+            okhttplogging        : "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
+            gson                 : "com.google.code.gson:gson:2.4",
+            glide                : "com.github.bumptech.glide:glide:3.7.0",
+            calligraphy          : "uk.co.chrisjenx:calligraphy:2.2.0",
+            photoView            : "com.github.chrisbanes:PhotoView:1.2.6",
+            picasso              : "com.squareup.picasso:picasso:2.5.2",
+            pickView             : "com.bigkoo:pickerview:2.1.0",
+            pageSlide            : "com.astuetz:pagerslidingtabstrip:1.0.1",
+            logger               : "com.orhanobut:logger:1.15",
+            fresco               : "com.facebook.fresco:fresco:$frescoVersion",
+            frescoOkhttp         : "com.facebook.fresco:imagepipeline-okhttp3:$frescoVersion",
+            fresco_gif           : "com.facebook.fresco:animated-gif:$frescoVersion",
+            constraintLayout     : "com.android.support.constraint:constraint-layout:$constraintlayoutVersion"
+    ]
+}
