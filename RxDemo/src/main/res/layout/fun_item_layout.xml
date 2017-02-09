@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FunItemCardView"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginBottom="@dimen/fun_cardView_margin_b"
+    android:layout_marginLeft="@dimen/fun_cardView_margin_lr"
+    android:layout_marginRight="@dimen/fun_cardView_margin_lr"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:paddingEnd="4dp"
+        android:paddingStart="16dp">
+
+        <Space
+            android:id="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/FunItemTitle"
+            style="@style/FunItemTextStyle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/center"
+            tools:text="ReactiveX介绍" />
+
+        <TextView
+            android:id="@+id/FunItemIntroduce"
+            style="@style/FunItemTextStyle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/FunItemTitle"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="5dp"
+            android:autoLink="web"
+            android:ellipsize="end"
+            tools:text="https://www.gitbook.com/book/mcxiaoke/rxdocs/details" />
+
+        <ImageButton
+            android:id="@+id/FunItemMore"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:clickable="true"
+            android:padding="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_more_vert_black" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

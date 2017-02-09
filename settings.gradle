@@ -1,1 +1,1 @@
-include ':ConstraintLayout', ':BaseDepend'
+include ':ConstraintLayout', ':BaseDepend', ':RxDemo'

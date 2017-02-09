@@ -1,10 +1,12 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
 
     defaultConfig {
+        applicationId "com.jax.reactivex"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
@@ -19,14 +21,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     Map<String, String> dependencies = rootProject.ext.dependencies
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile dependencies.appCompat
+    compile dependencies.support
+    compile dependencies.design
+    compile dependencies.cardView
+    compile dependencies.rxJava
+    compile dependencies.rxAndroid
     testCompile dependencies.jUnit
+    compile dependencies.constraintLayout
+    compile project(':BaseDepend')
 }
