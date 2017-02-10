@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.jax.basedepend.BaseActivity;
 import com.jax.reactivex.bean.FunItemType;
+import com.jax.reactivex.detail.SchedulerDemoActivity;
 import com.jax.reactivex.detail.SingleDemoActivity;
 import com.jax.reactivex.detail.SubjectDemoActivity;
 import com.jax.reactivex.fun.SingleDemo;
@@ -43,6 +44,7 @@ public class MainActivity extends BaseActivity implements FunAdapter.ItemClickLi
         infos.add(new FunItemInfo(FunItemType.TYPE_INTRODUCE, "Observable", "https://mcxiaoke.gitbooks.io/rxdocs/content/Observables.html"));
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Single", "https://mcxiaoke.gitbooks.io/rxdocs/content/Single.html").setTarget(SingleDemoActivity.class));
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Subject", "https://mcxiaoke.gitbooks.io/rxdocs/content/Subject.html").setTarget(SubjectDemoActivity.class));
+        infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Scheduler调度器", "https://mcxiaoke.gitbooks.io/rxdocs/content/Scheduler.html").setTarget(SchedulerDemoActivity.class));
     }
 
     @Override

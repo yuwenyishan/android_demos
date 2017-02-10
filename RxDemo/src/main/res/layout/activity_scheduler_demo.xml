@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="Scheduler demo" />
+
+    <Button
+        android:id="@+id/scheduler_newThread"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/scheduler_computation"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="13dp"
+        android:onClick="newThread"
+        android:text="newThread" />
+
+    <Button
+        android:id="@+id/scheduler_computation"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/scheduler_formExecutor"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scheduler_newThread"
+        android:onClick="computation"
+        android:text="computation" />
+
+    <Button
+        android:id="@+id/changeExecutor"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/scheduler_formExecutor"
+        android:layout_toEndOf="@+id/scheduler_formExecutor"
+        android:onClick="changeExecutor"
+        android:text="changeExecutor" />
+
+    <Button
+        android:id="@+id/scheduler_formExecutor"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scheduler_computation"
+        android:onClick="formExecutor"
+        android:text="formExecutor" />
+
+    <Button
+        android:id="@+id/scheduler_immediate"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/scheduler_computation"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scheduler_formExecutor"
+        android:onClick="immediate"
+        android:text="immediate" />
+
+    <Button
+        android:id="@+id/scheduler_io"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/scheduler_computation"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scheduler_immediate"
+        android:onClick="io"
+        android:text="io" />
+
+    <Button
+        android:id="@+id/scheduler_trampoline"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/scheduler_computation"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scheduler_io"
+        android:onClick="trampoline"
+        android:text="trampoline" />
+
+    <Button
+        android:id="@+id/scheduler_delay"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/scheduler_computation"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scheduler_trampoline"
+        android:onClick="delay"
+        android:text="delay" />
+
+    <Button
+        android:id="@+id/scheduler_periodically"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/scheduler_computation"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scheduler_delay"
+        android:onClick="periodically"
+        android:text="periodically" />
+</RelativeLayout>
