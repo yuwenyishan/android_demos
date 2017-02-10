@@ -5,8 +5,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.jax.basedepend.BaseActivity;
 import com.jax.reactivex.R;
+import com.jax.reactivex.RootActivity;
 import com.jax.reactivex.fun.SchedulerDemo;
 import com.jax.reactivex.util.ToastUtil;
 
@@ -14,7 +14,7 @@ import com.jax.reactivex.util.ToastUtil;
  * Created on 2017/2/10.
  */
 
-public class SchedulerDemoActivity extends BaseActivity {
+public class SchedulerDemoActivity extends RootActivity {
 
     private SchedulerDemo schedulerDemo;
 
