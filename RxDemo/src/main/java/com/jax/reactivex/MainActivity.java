@@ -4,23 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.jax.basedepend.BaseActivity;
 import com.jax.reactivex.bean.FunItemType;
+import com.jax.reactivex.detail.CreateDemoActivity;
 import com.jax.reactivex.detail.SchedulerDemoActivity;
 import com.jax.reactivex.detail.SingleDemoActivity;
 import com.jax.reactivex.detail.SubjectDemoActivity;
-import com.jax.reactivex.fun.SingleDemo;
-import com.jax.reactivex.fun.SubjectDemo;
 import com.jax.reactivex.model.FunItemInfo;
 import com.jax.reactivex.util.ToastUtil;
 
 import java.util.ArrayList;
-
-import rx.Single;
-import rx.SingleSubscriber;
-import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity implements FunAdapter.ItemClickListener {
 
@@ -45,6 +39,8 @@ public class MainActivity extends BaseActivity implements FunAdapter.ItemClickLi
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Single", "https://mcxiaoke.gitbooks.io/rxdocs/content/Single.html").setTarget(SingleDemoActivity.class));
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Subject", "https://mcxiaoke.gitbooks.io/rxdocs/content/Subject.html").setTarget(SubjectDemoActivity.class));
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Scheduler调度器", "https://mcxiaoke.gitbooks.io/rxdocs/content/Scheduler.html").setTarget(SchedulerDemoActivity.class));
+        infos.add(new FunItemInfo(FunItemType.TYPE_INTRODUCE, "Operators", "https://mcxiaoke.gitbooks.io/rxdocs/content/Operators.html"));
+        infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Create创建操作", "https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Creating-Observables.html").setTarget(CreateDemoActivity.class));
     }
 
     @Override

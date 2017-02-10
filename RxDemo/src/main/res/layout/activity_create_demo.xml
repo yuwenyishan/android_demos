@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Demo"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/create"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="8dp"
+        android:onClick="create"
+        android:text="Create" />
+
+    <Button
+        android:id="@+id/defer"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create"
+        android:layout_marginTop="8dp"
+        android:onClick="defer"
+        android:text="Defer" />
+
+    <Button
+        android:id="@+id/Empty"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/defer"
+        android:layout_marginTop="8dp"
+        android:onClick="empty"
+        android:text="Empty" />
+
+    <Button
+        android:id="@+id/Never"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Empty"
+        android:layout_marginTop="8dp"
+        android:onClick="never"
+        android:text="Never" />
+
+    <Button
+        android:id="@+id/Throw"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Never"
+        android:layout_marginTop="8dp"
+        android:onClick="throwE"
+        android:text="Throw" />
+</RelativeLayout>
