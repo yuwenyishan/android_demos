@@ -83,10 +83,11 @@ public class CreateDemo {
         //defer方法默认不在任何特定的调度器上执行。
         Observable<Integer> observable = Observable.defer(() -> Observable.just(testInteger));
         testInteger = 15;
-        observable.subscribe(integer -> {
+        Subscription subscription = observable.subscribe(integer -> {
             Log.d(TAG, "call: defer:-->testInteger:" + integer + " thread name:-->" + Thread.currentThread().getName());
             ToastUtil.showToast("onNext:" + integer);
         });
+        requestList.put("defer", subscription);
     }
 
     private boolean sendEmpty = false;
@@ -185,7 +186,7 @@ public class CreateDemo {
                 })//延迟发射下，否则看不到效果直接输出最后一个了。
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Subscriber<Integer>() {
+        Subscription subscription = observable.subscribe(new Subscriber<Integer>() {
             @Override
             public void onCompleted() {
                 Log.d(TAG, "onCompleted: formDemo send completed .");
@@ -202,6 +203,7 @@ public class CreateDemo {
                 ToastUtil.showToast("onNext" + integer);
             }
         });
+        requestList.put("from", subscription);
     }
 
     public void interval() {
@@ -225,7 +227,7 @@ public class CreateDemo {
         //创建一个发射指定值的Observable
         //Just类似于From，但是From会将数组或Iterable的数据取出然后逐个发射，而Just只是简单的原样发射，将数组或Iterable当做单个数据。
         //默认在当前线程运行
-        Observable.just(1, 2, 3, 4, 5)
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
                 .map(integer -> {
                     try {
                         Thread.sleep(2000);
@@ -237,19 +239,20 @@ public class CreateDemo {
                     return integer;
                 })
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> {
-                            Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
-                            ToastUtil.showToast("just onNext" + integer);
-                        }, throwable -> Log.e(TAG, "just onError: ", throwable)
-                        , () -> Log.d(TAG, "onCompleted: just send completed ."));
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
+                    ToastUtil.showToast("just onNext" + integer);
+                }, throwable -> Log.e(TAG, "just onError: ", throwable)
+                , () -> Log.d(TAG, "onCompleted: just send completed ."));
+        requestList.put("just", subscription);
     }
 
     public void range() {
         //创建一个发射特定整数序列的Observable
         //Range操作符发射一个范围内的有序整数序列，你可以指定范围的起始和长度。
         //range默认不在任何特定的调度器上执行。有一个变体可以通过可选参数指定Scheduler。
-        Observable.range(0, 5, Schedulers.io())
+        Observable<Integer> observable = Observable.range(0, 5, Schedulers.io())
                 .map(integer -> {
                     try {
                         Thread.sleep(2000);
@@ -261,18 +264,19 @@ public class CreateDemo {
                     return integer;
                 })
 //                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> {
-                            Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
-                            ToastUtil.showToast("range onNext" + integer);
-                        }, throwable -> Log.e(TAG, "range onError: ", throwable)
-                        , () -> Log.d(TAG, "onCompleted: range send completed ."));
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
+                    ToastUtil.showToast("range onNext" + integer);
+                }, throwable -> Log.e(TAG, "range onError: ", throwable)
+                , () -> Log.d(TAG, "onCompleted: range send completed ."));
+        requestList.put("range", subscription);
     }
 
     public void repeat() {
         //创建一个发射特定数据重复多次的Observable
         //repeat操作符默认在trampoline调度器上执行。有一个变体可以通过可选参数指定Scheduler。
-        Observable
+        Observable<Integer> observableRepeat = Observable
                 .just(0, 1, 2)
 //                .repeat(3, Schedulers.io())//-重复3次
                 .repeatWhen(observable -> {
@@ -295,18 +299,19 @@ public class CreateDemo {
                     return integer;
                 })
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> {
-                            Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
-                            ToastUtil.showToast("repeat onNext" + integer);
-                        }, throwable -> Log.e(TAG, "repeat onError: ", throwable)
-                        , () -> Log.d(TAG, "onCompleted: repeat send completed ."));
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observableRepeat.subscribe(integer -> {
+                    Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
+                    ToastUtil.showToast("repeat onNext" + integer);
+                }, throwable -> Log.e(TAG, "repeat onError: ", throwable)
+                , () -> Log.d(TAG, "onCompleted: repeat send completed ."));
+        requestList.put("repeat", subscription);
     }
 
     public void start() {
         //返回一个Observable，它发射一个类似于函数声明的值
 //        ToastUtil.showToast("需要引入io.reactivex:rxjava-async-util:0.21.0");
-        Async
+        Observable<Integer> observable = Async
 //                .start(() -> {//2s 后发射20
 //                    try {
 //                        Thread.sleep(2000);
@@ -327,19 +332,20 @@ public class CreateDemo {
                 })
                 .call()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> {
-                            Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
-                            ToastUtil.showToast("start onNext" + integer);
-                        }, throwable -> Log.e(TAG, "start onError: ", throwable)
-                        , () -> Log.d(TAG, "onCompleted: start send completed ."));
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
+                    ToastUtil.showToast("start onNext" + integer);
+                }, throwable -> Log.e(TAG, "start onError: ", throwable)
+                , () -> Log.d(TAG, "onCompleted: start send completed ."));
+        requestList.put("start", subscription);
     }
 
     public void timer() {
         //创建一个Observable，它在一个给定的延迟后发射一个特殊的值。
         //timer返回一个Observable，它在延迟一段给定的时间后发射一个简单的数字0。
         //timer操作符默认在computation调度器上执行。有一个变体可以通过可选参数指定Scheduler。
-        Observable.timer(2, TimeUnit.SECONDS, Schedulers.io())
+        Observable<Long> observable = Observable.timer(2, TimeUnit.SECONDS, Schedulers.io())
                 .map(integer -> {
                     try {
                         Thread.sleep(2000);
@@ -351,11 +357,12 @@ public class CreateDemo {
                     return integer;
                 })
 //                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> {
-                            Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
-                            ToastUtil.showToast("timer onNext" + integer);
-                        }, throwable -> Log.e(TAG, "timer onError: ", throwable)
-                        , () -> Log.d(TAG, "onCompleted: timer send completed ."));
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(TAG, "onNext: -->integer:" + integer + " thread name:-->" + Thread.currentThread().getName());
+                    ToastUtil.showToast("timer onNext" + integer);
+                }, throwable -> Log.e(TAG, "timer onError: ", throwable)
+                , () -> Log.d(TAG, "onCompleted: timer send completed ."));
+        requestList.put("timer", subscription);
     }
 }
