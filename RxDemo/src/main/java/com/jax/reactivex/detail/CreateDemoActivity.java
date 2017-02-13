@@ -24,7 +24,14 @@ public class CreateDemoActivity extends RootActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_demo);
         createDemo = new CreateDemo();
-        createDemo.setHandler(handler);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (createDemo != null) {
+            createDemo.onDestroy();
+        }
+        super.onDestroy();
     }
 
     private Handler handler = new Handler(message -> {
@@ -56,5 +63,33 @@ public class CreateDemoActivity extends RootActivity {
 
     public void throwE(View view) {
         createDemo.throwE();
+    }
+
+    public void from(View view) {
+        createDemo.from();
+    }
+
+    public void interval(View view) {
+        createDemo.interval();
+    }
+
+    public void just(View view) {
+        createDemo.just();
+    }
+
+    public void range(View view) {
+        createDemo.range();
+    }
+
+    public void repeat(View view) {
+        createDemo.repeat();
+    }
+
+    public void start(View view) {
+        createDemo.start();
+    }
+
+    public void timer(View view) {
+        createDemo.timer();
     }
 }

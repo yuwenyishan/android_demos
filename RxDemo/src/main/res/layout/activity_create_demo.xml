@@ -1,63 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Demo"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin">
 
-    <Button
-        android:id="@+id/create"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="8dp"
-        android:onClick="create"
-        android:text="Create" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Demo"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/defer"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/create"
-        android:layout_marginTop="8dp"
-        android:onClick="defer"
-        android:text="Defer" />
+        <Button
+            android:id="@+id/create"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="8dp"
+            android:onClick="create"
+            android:text="Create" />
 
-    <Button
-        android:id="@+id/Empty"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/defer"
-        android:layout_marginTop="8dp"
-        android:onClick="empty"
-        android:text="Empty" />
+        <Button
+            android:id="@+id/defer"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/create"
+            android:layout_marginTop="8dp"
+            android:onClick="defer"
+            android:text="Defer" />
 
-    <Button
-        android:id="@+id/Never"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Empty"
-        android:layout_marginTop="8dp"
-        android:onClick="never"
-        android:text="Never" />
+        <Button
+            android:id="@+id/Empty"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/defer"
+            android:layout_marginTop="8dp"
+            android:onClick="empty"
+            android:text="Empty" />
 
-    <Button
-        android:id="@+id/Throw"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Never"
-        android:layout_marginTop="8dp"
-        android:onClick="throwE"
-        android:text="Throw" />
-</RelativeLayout>
+        <Button
+            android:id="@+id/Never"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Empty"
+            android:layout_marginTop="8dp"
+            android:onClick="never"
+            android:text="Never" />
+
+        <Button
+            android:id="@+id/Throw"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Never"
+            android:layout_marginTop="8dp"
+            android:onClick="throwE"
+            android:text="Throw" />
+
+        <Button
+            android:id="@+id/from"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Throw"
+            android:layout_marginTop="8dp"
+            android:onClick="from"
+            android:text="From" />
+
+        <Button
+            android:id="@+id/interval"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/from"
+            android:layout_marginTop="8dp"
+            android:onClick="interval"
+            android:text="Interval" />
+
+        <Button
+            android:id="@+id/just"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/interval"
+            android:layout_marginTop="8dp"
+            android:onClick="just"
+            android:text="Just" />
+
+        <Button
+            android:id="@+id/range"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/just"
+            android:layout_marginTop="8dp"
+            android:onClick="range"
+            android:text="Range" />
+
+        <Button
+            android:id="@+id/repeat"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/range"
+            android:layout_marginTop="8dp"
+            android:onClick="repeat"
+            android:text="Repeat" />
+
+        <Button
+            android:id="@+id/start"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/repeat"
+            android:layout_marginTop="8dp"
+            android:onClick="start"
+            android:text="Start" />
+
+        <Button
+            android:id="@+id/timer"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/start"
+            android:layout_marginTop="8dp"
+            android:onClick="timer"
+            android:text="Timer" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

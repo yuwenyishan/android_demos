@@ -12,6 +12,7 @@ ext {
             design               : "com.android.support:design:$supportLibraryVersion",
             cardView             : "com.android.support:cardview-v7:$supportLibraryVersion",
             rxJava               : "io.reactivex:rxjava:$rxJaveAndroidVersion",
+            rxJavaAsyncUtil      : "io.reactivex:rxjava-async-util:0.21.0",
             rxAndroid            : "io.reactivex:rxandroid:$rxJaveAndroidVersion",
             retorfit             : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofitConverterGson: "com.squareup.retrofit2:converter-gson:$retrofitVersion",

@@ -35,6 +35,7 @@ dependencies {
     compile dependencies.design
     compile dependencies.cardView
     compile dependencies.rxJava
+    compile dependencies.rxJavaAsyncUtil
     compile dependencies.rxAndroid
     testCompile dependencies.jUnit
     compile dependencies.constraintLayout
