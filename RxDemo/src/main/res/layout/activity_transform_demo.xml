@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transform Demo"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/buffer"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="8dp"
+            android:onClick="buffer"
+            android:text="Buffer" />
+
+        <Button
+            android:id="@+id/flatMap"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buffer"
+            android:layout_marginTop="8dp"
+            android:onClick="flatMap"
+            android:text="flatMap" />
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

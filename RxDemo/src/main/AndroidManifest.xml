@@ -36,6 +36,9 @@
         <activity
             android:name=".detail.CreateDemoActivity"
             android:label="创建操作" />
+        <activity
+            android:name=".detail.TransformDemoActivity"
+            android:label="变换操作" />
     </application>
 
 </manifest>
