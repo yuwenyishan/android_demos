@@ -23,11 +23,23 @@ public class TransformDemoActivity extends RootActivity {
         demo = new TransformDemo();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (demo != null) {
+            demo.onDestroy();
+        }
+        super.onDestroy();
+    }
+
     public void buffer(View view) {
         demo.buffer();
     }
 
     public void flatMap(View view) {
         demo.flatMap();
+    }
+
+    public void groupBy(View view) {
+        demo.groupBy();
     }
 }
