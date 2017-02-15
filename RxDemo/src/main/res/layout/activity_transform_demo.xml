@@ -55,5 +55,15 @@
             android:onClick="map"
             android:text="Map" />
 
+        <Button
+            android:id="@+id/scan"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/map"
+            android:layout_marginTop="8dp"
+            android:onClick="scan"
+            android:text="Scan" />
+
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

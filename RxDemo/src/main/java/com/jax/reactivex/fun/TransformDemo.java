@@ -15,6 +15,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.observables.GroupedObservable;
 import rx.schedulers.Schedulers;
 
@@ -159,7 +160,7 @@ public class TransformDemo {
     public void map() {
         //对Observable发射的每一项数据应用一个函数，执行变换操作
         Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
-                .map(integer -> integer * 3 )//每个数乘以3
+                .map(integer -> integer * 3)//每个数乘以3
 //                .cast(Integer.class)//操作符将原始Observable发射的每一项数据都强制转换为一个指定的类型，然后再发射数据，它是map的一个特殊版本。
                 .map(integer -> {
                     try {
@@ -178,5 +179,32 @@ public class TransformDemo {
                 }, throwable -> Log.e(TAG, "map: OnError-->", throwable),
                 () -> Log.d(TAG, "map: onComplete--> map Demo complete ."));
         subscriptionList.put("map", s);
+    }
+
+    public void scan() {
+        //连续地对数据序列的每一项应用一个函数，然后连续发射结果
+        //scan操作符通过遍历源Observable产生的结果，依次对每一个结果项按照指定规则进行运算，
+        // 计算后的结果作为下一个迭代项参数，每一次迭代项都会把计算结果输出给订阅者。
+        //这个操作符默认不在任何特定的调度器上执行。
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
+//                .scan((sum, item) -> sum + item)// //参数sum就是上一次的计算结果
+                .scan(10, (sum, item) -> sum + item)// //10,为种子值参数sum就是上一次的计算结果
+                .map(integer -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(TAG, "scan: onNext-->" + integer + " ThreadName--> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("scan: onNext-->" + integer);
+                }, throwable -> Log.e(TAG, "scan: OnError-->", throwable),
+                () -> Log.d(TAG, "scan: onComplete--> scan Demo complete ."));
+        subscriptionList.put("Scan", subscription);
     }
 }

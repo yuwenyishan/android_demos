@@ -46,4 +46,8 @@ public class TransformDemoActivity extends RootActivity {
     public void map(View view) {
         demo.map();
     }
+
+    public void scan(View view) {
+        demo.scan();
+    }
 }
