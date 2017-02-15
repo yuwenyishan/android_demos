@@ -45,5 +45,15 @@
             android:onClick="groupBy"
             android:text="GroupBy" />
 
+        <Button
+            android:id="@+id/map"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/groupBy"
+            android:layout_marginTop="8dp"
+            android:onClick="map"
+            android:text="Map" />
+
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

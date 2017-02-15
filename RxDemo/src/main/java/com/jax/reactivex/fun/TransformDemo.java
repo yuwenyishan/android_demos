@@ -155,4 +155,28 @@ public class TransformDemo {
         });
         subscriptionList.put("groupBy", groupS);
     }
+
+    public void map() {
+        //对Observable发射的每一项数据应用一个函数，执行变换操作
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
+                .map(integer -> integer * 3 )//每个数乘以3
+//                .cast(Integer.class)//操作符将原始Observable发射的每一项数据都强制转换为一个指定的类型，然后再发射数据，它是map的一个特殊版本。
+                .map(integer -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription s = observable.subscribe(integer -> {
+                    Log.d(TAG, "map: onNext-->" + integer + " ThreadName--> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("map: onNext-->" + integer);
+                }, throwable -> Log.e(TAG, "map: OnError-->", throwable),
+                () -> Log.d(TAG, "map: onComplete--> map Demo complete ."));
+        subscriptionList.put("map", s);
+    }
 }

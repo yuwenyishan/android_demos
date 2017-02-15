@@ -42,4 +42,8 @@ public class TransformDemoActivity extends RootActivity {
     public void groupBy(View view) {
         demo.groupBy();
     }
+
+    public void map(View view) {
+        demo.map();
+    }
 }
