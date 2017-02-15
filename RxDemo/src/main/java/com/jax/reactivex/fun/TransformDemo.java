@@ -4,13 +4,16 @@ import android.util.Log;
 
 import com.jax.reactivex.util.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -76,20 +79,25 @@ public class TransformDemo {
     }
 
     public void flatMap() {
+        flatConcatMap();
+//        flatMapIterable();
+    }
+
+    private void flatConcatMap() {
         Observable.just(1, 2, 3, 4, 5, 6)
-                .flatMap(new Func1<Integer, Observable<String>>() {
+//                .flatMap(new Func1<Integer, Observable<String>>() {//FlatMap对这些Observables发射的数据做的是合并(merge)操作，因此它们可能是交错的。
+//                .concatMap(new Func1<Integer, Observable<String>>() {//concatMap操作符，它类似于最简单版本的flatMap，但是它按次序连接而不是合并那些生成的Observables，然后产生自己的数据序列。
+                .switchMap(new Func1<Integer, Observable<String>>() {//：当原始Observable发射一个新的数据（Observable）时，它将取消订阅并停止监视产生执之前那个数据的Observable，只监视当前这一个。
                     @Override
                     public Observable<String> call(Integer integer) {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                            throw Exceptions.propagate(e);
+                        int delay = 1500;
+                        if (integer > 2) {
+                            delay = 900;
                         }
-                        return Observable.just(integer * integer + "大大");
+                        return Observable.just(integer * integer + "").delay(delay, TimeUnit.MILLISECONDS);
                     }
                 })
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
                             Log.d(TAG, "flatMap onNext: -->integer:" + s + " thread name:-->" + Thread.currentThread().getName());
@@ -97,4 +105,28 @@ public class TransformDemo {
                         }, throwable -> Log.e(TAG, "flatMap onError: ", throwable),
                         () -> Log.d(TAG, "flatMap onCompleted: flatMap send completed ."));
     }
+
+    private void flatMapIterable() {
+        //flatMapIterable这个变体成对的打包数据，然后生成Iterable而不是原始数据和生成的Observables，但是处理方式是相同的。
+        Observable.just(1, 2, 3, 4, 5)
+                .flatMapIterable(new Func1<Integer, Iterable<String>>() {
+                    @Override
+                    public Iterable<String> call(Integer integer) {
+                        ArrayList<String> integers = new ArrayList<>();
+                        integers.add(integer + " 1^");
+                        integers.add(integer * integer + " 2^");
+                        integers.add(integer * integer * integer + " 3^");
+                        return integers;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                            Log.d(TAG, "flatMapIterable onNext: -->integer:" + s + " thread name:-->" + Thread.currentThread().getName());
+                            ToastUtil.showToast("flatMapIterable onNext " + s);
+                        }, throwable -> Log.e(TAG, "flatMapIterable onError: ", throwable),
+                        () -> Log.d(TAG, "flatMapIterable onCompleted: flatMapIterable send completed ."));
+    }
+
+
 }
