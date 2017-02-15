@@ -207,4 +207,28 @@ public class TransformDemo {
                 () -> Log.d(TAG, "scan: onComplete--> scan Demo complete ."));
         subscriptionList.put("Scan", subscription);
     }
+
+    public void window() {
+        //定期将来自原始Observable的数据分解为一个Observable窗口，发射这些窗口，而不是每次发射一项数据
+        //window操作符非常类似于buffer操作符，区别在于buffer操作符产生的结果是一个List缓存，
+        // 而window操作符产生的结果是一个Observable，订阅者可以对这个结果Observable重新进行订阅处理。
+
+        Observable<Observable<Long>> observable =
+                Observable.interval(1, TimeUnit.SECONDS, Schedulers.io())
+                        .take(10)
+                        .window(3, TimeUnit.SECONDS);
+        Subscription subscription = observable.subscribe(longObservable -> {
+                    Log.d(TAG, "window: item begin");
+                    Subscription itemS = longObservable
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(aLong -> {
+                                        Log.d(TAG, "window item: onNext-->" + aLong + " ThreadName--> " + Thread.currentThread().getName());
+                                        ToastUtil.showToast("window item: onNext-->" + aLong);
+                                    }, throwable -> Log.e(TAG, "window item: OnError-->", throwable),
+                                    () -> Log.d(TAG, "window item: onComplete--> window Demo complete ."));
+                    subscriptionList.put(longObservable.hashCode() + "", itemS);
+                }, throwable -> Log.e(TAG, "window: OnError-->", throwable),
+                () -> Log.d(TAG, "window: onComplete--> window Demo complete ."));
+        subscriptionList.put("window", subscription);
+    }
 }

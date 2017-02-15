@@ -50,4 +50,8 @@ public class TransformDemoActivity extends RootActivity {
     public void scan(View view) {
         demo.scan();
     }
+
+    public void window(View view) {
+        demo.window();
+    }
 }
