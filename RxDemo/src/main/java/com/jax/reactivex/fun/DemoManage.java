@@ -11,10 +11,10 @@ import rx.Subscription;
 
 public class DemoManage {
 
-    public HashMap<String, Subscription> requestList = new HashMap<>();
+    public HashMap<String, Subscription> subscriptionMap = new HashMap<>();
 
     public void onDestroy() {
-        for (Map.Entry<String, Subscription> stringSubscriptionEntry : requestList.entrySet()) {
+        for (Map.Entry<String, Subscription> stringSubscriptionEntry : subscriptionMap.entrySet()) {
             Subscription s = stringSubscriptionEntry.getValue();
             if (!s.isUnsubscribed()) {
                 s.unsubscribe();

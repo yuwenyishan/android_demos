@@ -10,12 +10,10 @@ import com.jax.reactivex.R;
 import com.jax.reactivex.RootActivity;
 import com.jax.reactivex.fun.FilterDemo;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * Created on 2017/2/15.
@@ -31,11 +29,23 @@ public class FilterDemoActivity extends RootActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_demo);
         demo = new FilterDemo();
+        debounce(findViewById(R.id.debounce));
+        distinct(findViewById(R.id.distinct));
+        elementAt(findViewById(R.id.elementAt));
     }
 
     public void debounce(View view) {
 //        demo.debounce();
         doubleClickDetect(view, () -> demo.debounce());
+    }
+
+    public void distinct(View view) {
+        debounceOperation(view, () -> demo.distinct());
+    }
+
+    public void elementAt(View view) {
+        Log.d(TAG, "elementAt: --");
+        debounceOperation(view, () -> demo.elementAt());
     }
 
     public void doubleClickDetect(View view, DoubleClick click) {//双击检测
@@ -53,6 +63,16 @@ public class FilterDemoActivity extends RootActivity {
                         if (click != null) {
                             click.result();
                         }
+                    }
+                }, throwable -> Log.e(TAG, "doubleClickDetect: onError-->", throwable));
+    }
+
+    public void debounceOperation(View view, DoubleClick click) {
+        RxView.clicks(view).share().throttleFirst(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aVoid -> {
+                    if (click != null) {////两秒钟之内只取一个点击事件，防抖操作
+                        click.result();
                     }
                 }, throwable -> Log.e(TAG, "doubleClickDetect: onError-->", throwable));
     }

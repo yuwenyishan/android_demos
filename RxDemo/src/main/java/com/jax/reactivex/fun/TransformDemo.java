@@ -63,7 +63,7 @@ public class TransformDemo extends DemoManage {
 //        bufferControl.subscribe(integer -> {
 //            Log.d(TAG, "buffer: control : " + integer);
 //        });
-        requestList.put("buffer", subscription);
+        subscriptionMap.put("buffer", subscription);
     }
 
     public void flatMap() {
@@ -94,7 +94,7 @@ public class TransformDemo extends DemoManage {
                     ToastUtil.showToast("flatMap onNext " + s);
                 }, throwable -> Log.e(TAG, "flatMap onError: ", throwable),
                 () -> Log.d(TAG, "flatMap onCompleted: flatMap send completed ."));
-        requestList.put("flatConcatMap", subscription);
+        subscriptionMap.put("flatConcatMap", subscription);
     }
 
     private void flatMapIterable() {
@@ -117,7 +117,7 @@ public class TransformDemo extends DemoManage {
                     ToastUtil.showToast("flatMapIterable onNext " + s);
                 }, throwable -> Log.e(TAG, "flatMapIterable onError: ", throwable),
                 () -> Log.d(TAG, "flatMapIterable onCompleted: flatMapIterable send completed ."));
-        requestList.put("flatMapIterable", subscription);
+        subscriptionMap.put("flatMapIterable", subscription);
     }
 
     public void groupBy() {
@@ -138,9 +138,9 @@ public class TransformDemo extends DemoManage {
                                 ToastUtil.showToast("groupBy onNext " + aLong + " key-->" + longLongGroupedObservable.getKey());
                             }, throwable -> Log.e(TAG, "groupBy onError: ", throwable),
                             () -> Log.d(TAG, "groupBy onCompleted: groupBy send completed ."));
-            requestList.put(longLongGroupedObservable.getKey() + "", s);
+            subscriptionMap.put(longLongGroupedObservable.getKey() + "", s);
         });
-        requestList.put("groupBy", groupS);
+        subscriptionMap.put("groupBy", groupS);
     }
 
     public void map() {
@@ -164,7 +164,7 @@ public class TransformDemo extends DemoManage {
                     ToastUtil.showToast("map: onNext-->" + integer);
                 }, throwable -> Log.e(TAG, "map: OnError-->", throwable),
                 () -> Log.d(TAG, "map: onComplete--> map Demo complete ."));
-        requestList.put("map", s);
+        subscriptionMap.put("map", s);
     }
 
     public void scan() {
@@ -191,7 +191,7 @@ public class TransformDemo extends DemoManage {
                     ToastUtil.showToast("scan: onNext-->" + integer);
                 }, throwable -> Log.e(TAG, "scan: OnError-->", throwable),
                 () -> Log.d(TAG, "scan: onComplete--> scan Demo complete ."));
-        requestList.put("Scan", subscription);
+        subscriptionMap.put("Scan", subscription);
     }
 
     public void window() {
@@ -212,9 +212,9 @@ public class TransformDemo extends DemoManage {
                                         ToastUtil.showToast("window item: onNext-->" + aLong);
                                     }, throwable -> Log.e(TAG, "window item: OnError-->", throwable),
                                     () -> Log.d(TAG, "window item: onComplete--> window Demo complete ."));
-                    requestList.put(longObservable.hashCode() + "", itemS);
+                    subscriptionMap.put(longObservable.hashCode() + "", itemS);
                 }, throwable -> Log.e(TAG, "window: OnError-->", throwable),
                 () -> Log.d(TAG, "window: onComplete--> window Demo complete ."));
-        requestList.put("window", subscription);
+        subscriptionMap.put("window", subscription);
     }
 }

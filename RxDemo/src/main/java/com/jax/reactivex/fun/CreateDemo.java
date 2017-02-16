@@ -60,7 +60,7 @@ public class CreateDemo extends DemoManage {
                 ToastUtil.showToast("onNext:" + integer);
             }
         });
-        requestList.put("create", subscription);
+        subscriptionMap.put("create", subscription);
     }
 
     private int testInteger = 12;
@@ -74,7 +74,7 @@ public class CreateDemo extends DemoManage {
             Log.d(TAG, "call: defer:-->testInteger:" + integer + " thread name:-->" + Thread.currentThread().getName());
             ToastUtil.showToast("onNext:" + integer);
         });
-        requestList.put("defer", subscription);
+        subscriptionMap.put("defer", subscription);
     }
 
     private boolean sendEmpty = false;
@@ -190,7 +190,7 @@ public class CreateDemo extends DemoManage {
                 ToastUtil.showToast("onNext" + integer);
             }
         });
-        requestList.put("from", subscription);
+        subscriptionMap.put("from", subscription);
     }
 
     public void interval() {
@@ -207,7 +207,7 @@ public class CreateDemo extends DemoManage {
                 },
                 throwable -> Log.e(TAG, "interval onError: ", throwable),
                 () -> Log.d(TAG, "onCompleted: interval send completed ."));
-        requestList.put("interval", su);//interval 需要手动取消订阅，否则回一直发射整数！
+        subscriptionMap.put("interval", su);//interval 需要手动取消订阅，否则回一直发射整数！
     }
 
     public void just() {
@@ -232,7 +232,7 @@ public class CreateDemo extends DemoManage {
                     ToastUtil.showToast("just onNext" + integer);
                 }, throwable -> Log.e(TAG, "just onError: ", throwable)
                 , () -> Log.d(TAG, "onCompleted: just send completed ."));
-        requestList.put("just", subscription);
+        subscriptionMap.put("just", subscription);
     }
 
     public void range() {
@@ -257,7 +257,7 @@ public class CreateDemo extends DemoManage {
                     ToastUtil.showToast("range onNext" + integer);
                 }, throwable -> Log.e(TAG, "range onError: ", throwable)
                 , () -> Log.d(TAG, "onCompleted: range send completed ."));
-        requestList.put("range", subscription);
+        subscriptionMap.put("range", subscription);
     }
 
     public void repeat() {
@@ -292,7 +292,7 @@ public class CreateDemo extends DemoManage {
                     ToastUtil.showToast("repeat onNext" + integer);
                 }, throwable -> Log.e(TAG, "repeat onError: ", throwable)
                 , () -> Log.d(TAG, "onCompleted: repeat send completed ."));
-        requestList.put("repeat", subscription);
+        subscriptionMap.put("repeat", subscription);
     }
 
     public void start() {
@@ -325,7 +325,7 @@ public class CreateDemo extends DemoManage {
                     ToastUtil.showToast("start onNext" + integer);
                 }, throwable -> Log.e(TAG, "start onError: ", throwable)
                 , () -> Log.d(TAG, "onCompleted: start send completed ."));
-        requestList.put("start", subscription);
+        subscriptionMap.put("start", subscription);
     }
 
     public void timer() {
@@ -350,6 +350,6 @@ public class CreateDemo extends DemoManage {
                     ToastUtil.showToast("timer onNext" + integer);
                 }, throwable -> Log.e(TAG, "timer onError: ", throwable)
                 , () -> Log.d(TAG, "onCompleted: timer send completed ."));
-        requestList.put("timer", subscription);
+        subscriptionMap.put("timer", subscription);
     }
 }
