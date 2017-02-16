@@ -37,6 +37,7 @@ dependencies {
     compile dependencies.rxJava
     compile dependencies.rxJavaAsyncUtil
     compile dependencies.rxAndroid
+    compile dependencies.rxBinding
     testCompile dependencies.jUnit
     compile dependencies.constraintLayout
     compile project(':BaseDepend')

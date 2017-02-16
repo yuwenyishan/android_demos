@@ -5,17 +5,13 @@ import android.util.Log;
 import com.jax.reactivex.util.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
-import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.observables.GroupedObservable;
 import rx.schedulers.Schedulers;
 
@@ -23,18 +19,8 @@ import rx.schedulers.Schedulers;
  * Created on 2017/2/13.
  */
 
-public class TransformDemo {
+public class TransformDemo extends DemoManage {
     private static final String TAG = "TransformDemo";
-    private HashMap<String, Subscription> subscriptionList = new HashMap<>();
-
-    public void onDestroy() {
-        for (Map.Entry<String, Subscription> stringSubscriptionEntry : subscriptionList.entrySet()) {
-            Subscription s = stringSubscriptionEntry.getValue();
-            if (!s.isUnsubscribed()) {
-                s.unsubscribe();
-            }
-        }
-    }
 
     public void buffer() {
         //定期收集Observable的数据放进一个数据包裹，然后发射这些数据包裹，而不是一次发射一个值
@@ -77,7 +63,7 @@ public class TransformDemo {
 //        bufferControl.subscribe(integer -> {
 //            Log.d(TAG, "buffer: control : " + integer);
 //        });
-        subscriptionList.put("buffer", subscription);
+        requestList.put("buffer", subscription);
     }
 
     public void flatMap() {
@@ -108,7 +94,7 @@ public class TransformDemo {
                     ToastUtil.showToast("flatMap onNext " + s);
                 }, throwable -> Log.e(TAG, "flatMap onError: ", throwable),
                 () -> Log.d(TAG, "flatMap onCompleted: flatMap send completed ."));
-        subscriptionList.put("flatConcatMap", subscription);
+        requestList.put("flatConcatMap", subscription);
     }
 
     private void flatMapIterable() {
@@ -131,7 +117,7 @@ public class TransformDemo {
                     ToastUtil.showToast("flatMapIterable onNext " + s);
                 }, throwable -> Log.e(TAG, "flatMapIterable onError: ", throwable),
                 () -> Log.d(TAG, "flatMapIterable onCompleted: flatMapIterable send completed ."));
-        subscriptionList.put("flatMapIterable", subscription);
+        requestList.put("flatMapIterable", subscription);
     }
 
     public void groupBy() {
@@ -152,9 +138,9 @@ public class TransformDemo {
                                 ToastUtil.showToast("groupBy onNext " + aLong + " key-->" + longLongGroupedObservable.getKey());
                             }, throwable -> Log.e(TAG, "groupBy onError: ", throwable),
                             () -> Log.d(TAG, "groupBy onCompleted: groupBy send completed ."));
-            subscriptionList.put(longLongGroupedObservable.getKey() + "", s);
+            requestList.put(longLongGroupedObservable.getKey() + "", s);
         });
-        subscriptionList.put("groupBy", groupS);
+        requestList.put("groupBy", groupS);
     }
 
     public void map() {
@@ -178,7 +164,7 @@ public class TransformDemo {
                     ToastUtil.showToast("map: onNext-->" + integer);
                 }, throwable -> Log.e(TAG, "map: OnError-->", throwable),
                 () -> Log.d(TAG, "map: onComplete--> map Demo complete ."));
-        subscriptionList.put("map", s);
+        requestList.put("map", s);
     }
 
     public void scan() {
@@ -205,7 +191,7 @@ public class TransformDemo {
                     ToastUtil.showToast("scan: onNext-->" + integer);
                 }, throwable -> Log.e(TAG, "scan: OnError-->", throwable),
                 () -> Log.d(TAG, "scan: onComplete--> scan Demo complete ."));
-        subscriptionList.put("Scan", subscription);
+        requestList.put("Scan", subscription);
     }
 
     public void window() {
@@ -226,9 +212,9 @@ public class TransformDemo {
                                         ToastUtil.showToast("window item: onNext-->" + aLong);
                                     }, throwable -> Log.e(TAG, "window item: OnError-->", throwable),
                                     () -> Log.d(TAG, "window item: onComplete--> window Demo complete ."));
-                    subscriptionList.put(longObservable.hashCode() + "", itemS);
+                    requestList.put(longObservable.hashCode() + "", itemS);
                 }, throwable -> Log.e(TAG, "window: OnError-->", throwable),
                 () -> Log.d(TAG, "window: onComplete--> window Demo complete ."));
-        subscriptionList.put("window", subscription);
+        requestList.put("window", subscription);
     }
 }

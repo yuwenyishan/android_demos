@@ -39,6 +39,9 @@
         <activity
             android:name=".detail.TransformDemoActivity"
             android:label="变换操作" />
+        <activity
+            android:name=".detail.FilterDemoActivity"
+            android:label="过滤操作" />
     </application>
 
 </manifest>

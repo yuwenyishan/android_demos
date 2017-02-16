@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.jax.reactivex.util.ToastUtil;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -22,19 +20,8 @@ import rx.util.async.Async;
  * Created on 2017/2/10.
  */
 
-public class CreateDemo {
+public class CreateDemo extends DemoManage {
     private static final String TAG = "CreateDemo";
-
-    private HashMap<String, Subscription> requestList = new HashMap<>();
-
-    public void onDestroy() {
-        for (Map.Entry<String, Subscription> stringSubscriptionEntry : requestList.entrySet()) {
-            Subscription s = stringSubscriptionEntry.getValue();
-            if (!s.isUnsubscribed()) {
-                s.unsubscribe();
-            }
-        }
-    }
 
     public void create() {
         //https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Create.html
