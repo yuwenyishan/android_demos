@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.jax.reactivex.util.ToastUtil;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -11,7 +12,6 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -194,5 +194,170 @@ public class FilterDemo extends DemoManage {
                 , throwable -> Log.e(TAG, "ignoreElements: onError", throwable)
                 , () -> Log.d(TAG, "ignoreElements onComplete ."));
         subscriptionMap.put("ignoreElements", subscription);
+    }
+
+    public void last() {
+        //只发射最后一项（或者满足某个条件的最后一项）数据
+        //last和lastOrDefault默认不在任何特定的调度器上执行。
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
+//                .last();
+//                .last(integer -> integer < 4);
+                .lastOrDefault(10, integer -> integer > 5);
+        Subscription subscription = observable.subscribe(aLong -> {
+                    Log.d(TAG, "last: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("last onNext-> " + aLong);
+                }
+                , throwable -> Log.e(TAG, "last: onError", throwable)
+                , () -> Log.d(TAG, "last onComplete ."));
+        subscriptionMap.put("last", subscription);
+    }
+
+    public void sample() {
+        //定期发射Observable最近发射的数据项
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .sample(1000, TimeUnit.MILLISECONDS)
+                //throttleFirst与throttleLast/sample不同，在每个采样周期内，它总是发射原始Observable的第一项数据，而不是最近的一项。
+                //双击检测
+//                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        Subscription subscription = observable.subscribe(aLong -> {
+                    Log.d(TAG, "sample: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("sample onNext-> " + aLong);
+                }
+                , throwable -> Log.e(TAG, "sample: onError", throwable)
+                , () -> Log.d(TAG, "sample onComplete ."));
+        subscriptionMap.put("sample", subscription);
+    }
+
+    public void skip() {
+        //抑制Observable发射的前N项数据
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+//                .skip(3)
+                .skip(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        Subscription subscription = observable.subscribe(aLong -> {
+                    Log.d(TAG, "skip: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("skip onNext-> " + aLong);
+                }
+                , throwable -> Log.e(TAG, "skip: onError", throwable)
+                , () -> Log.d(TAG, "skip onComplete ."));
+        subscriptionMap.put("skip", subscription);
+
+    }
+
+    public void skipLast() {
+        //抑制Observable发射的后N项数据
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .skipLast(3)
+//                .skipLast(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        Subscription subscription = observable.subscribe(aLong -> {
+                    Log.d(TAG, "skipLast: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("skipLast onNext-> " + aLong);
+                }
+                , throwable -> Log.e(TAG, "skipLast: onError", throwable)
+                , () -> Log.d(TAG, "skipLast onComplete ."));
+        subscriptionMap.put("skipLast", subscription);
+    }
+
+    public void take() {
+        //抑制Observable发射的前N项数据
+        Observable<Long> observable = Observable.interval(500, TimeUnit.MILLISECONDS)
+//                .take(3)
+                .take(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        Subscription subscription = observable.subscribe(aLong -> {
+                    Log.d(TAG, "take: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("take onNext-> " + aLong);
+                }
+                , throwable -> Log.e(TAG, "take: onError", throwable)
+                , () -> Log.d(TAG, "take onComplete ."));
+        subscriptionMap.put("take", subscription);
+
+    }
+
+    public void takeLast() {
+        //抑制Observable发射的后N项数据
+        Observable<Integer> observable = Observable.just(1, 2, 3, 4, 5)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+//                .takeLast(3)
+//                .takeLast(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        Subscription subscription = observable.subscribe(aLong -> {
+                    Log.d(TAG, "takeLast: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("takeLast onNext-> " + aLong);
+                }
+                , throwable -> Log.e(TAG, "takeLast: onError", throwable)
+                , () -> Log.d(TAG, "takeLast onComplete ."));
+        subscriptionMap.put("takeLast", subscription);
+        takeLastBuffer();
+    }
+
+    private void takeLastBuffer() {
+        Observable<List<Integer>> observable = Observable.just(1, 2, 3, 4, 5)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .takeLastBuffer(3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(
+                integers -> {
+                    Log.d(TAG, "takeLastBuffer: onNext->" + integers + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("takeLastBuffer onNext-> " + integers);
+                }, throwable -> Log.e(TAG, "takeLastBuffer: onError", throwable)
+                , () -> Log.d(TAG, "takeLastBuffer onComplete ."));
+        subscriptionMap.put("takeLastBuffer", subscription);
     }
 }

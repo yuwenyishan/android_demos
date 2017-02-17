@@ -35,6 +35,12 @@ public class FilterDemoActivity extends RootActivity {
         filter(findViewById(R.id.filter));
         first(findViewById(R.id.first));
         ignoreElements(findViewById(R.id.ignoreElements));
+        last(findViewById(R.id.last));
+        sample(findViewById(R.id.sample));
+        skip(findViewById(R.id.skip));
+        skipLast(findViewById(R.id.skipLast));
+        take(findViewById(R.id.take));
+        takeLast(findViewById(R.id.takeLast));
     }
 
     public void debounce(View view) {
@@ -59,6 +65,30 @@ public class FilterDemoActivity extends RootActivity {
 
     public void ignoreElements(View view) {
         debounceOperation(view, () -> demo.ignoreElements());
+    }
+
+    public void last(View view) {
+        debounceOperation(view, () -> demo.last());
+    }
+
+    public void sample(View view) {
+        debounceOperation(view, () -> demo.sample());
+    }
+
+    public void skip(View view) {
+        debounceOperation(view, () -> demo.skip());
+    }
+
+    public void skipLast(View view) {
+        debounceOperation(view, () -> demo.skipLast());
+    }
+
+    public void take(View view) {
+        debounceOperation(view, () -> demo.take());
+    }
+
+    public void takeLast(View view) {
+        debounceOperation(view, () -> demo.takeLast());
     }
 
     public void doubleClickDetect(View view, DoubleClick click) {//双击检测
