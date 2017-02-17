@@ -32,10 +32,12 @@ public class FilterDemoActivity extends RootActivity {
         debounce(findViewById(R.id.debounce));
         distinct(findViewById(R.id.distinct));
         elementAt(findViewById(R.id.elementAt));
+        filter(findViewById(R.id.filter));
+        first(findViewById(R.id.first));
+        ignoreElements(findViewById(R.id.ignoreElements));
     }
 
     public void debounce(View view) {
-//        demo.debounce();
         doubleClickDetect(view, () -> demo.debounce());
     }
 
@@ -44,8 +46,19 @@ public class FilterDemoActivity extends RootActivity {
     }
 
     public void elementAt(View view) {
-        Log.d(TAG, "elementAt: --");
         debounceOperation(view, () -> demo.elementAt());
+    }
+
+    public void filter(View view) {
+        debounceOperation(view, () -> demo.filter());
+    }
+
+    public void first(View view) {
+        debounceOperation(view, () -> demo.first());
+    }
+
+    public void ignoreElements(View view) {
+        debounceOperation(view, () -> demo.ignoreElements());
     }
 
     public void doubleClickDetect(View view, DoubleClick click) {//双击检测

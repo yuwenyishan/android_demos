@@ -42,5 +42,32 @@
             android:layout_marginTop="8dp"
             android:text="ElementAt" />
 
+        <Button
+            android:id="@+id/filter"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/elementAt"
+            android:layout_marginTop="8dp"
+            android:text="Filter" />
+
+        <Button
+            android:id="@+id/first"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/filter"
+            android:layout_marginTop="8dp"
+            android:text="First" />
+
+        <Button
+            android:id="@+id/ignoreElements"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/first"
+            android:layout_marginTop="8dp"
+            android:text="IgnoreElements" />
+
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
