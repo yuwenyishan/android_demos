@@ -42,6 +42,9 @@
         <activity
             android:name=".detail.FilterDemoActivity"
             android:label="过滤操作" />
+        <activity
+            android:name=".detail.CombineDemoActivity"
+            android:label="合并操作" />
     </application>
 
 </manifest>

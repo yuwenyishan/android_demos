@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.jax.reactivex.DoubleClick;
 import com.jax.reactivex.R;
 import com.jax.reactivex.RootActivity;
 import com.jax.reactivex.fun.FilterDemo;
@@ -108,19 +109,5 @@ public class FilterDemoActivity extends RootActivity {
                         }
                     }
                 }, throwable -> Log.e(TAG, "doubleClickDetect: onError-->", throwable));
-    }
-
-    public void debounceOperation(View view, DoubleClick click) {
-        RxView.clicks(view).share().throttleFirst(2, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aVoid -> {
-                    if (click != null) {////两秒钟之内只取一个点击事件，防抖操作
-                        click.result();
-                    }
-                }, throwable -> Log.e(TAG, "doubleClickDetect: onError-->", throwable));
-    }
-
-    interface DoubleClick {
-        void result();
     }
 }
