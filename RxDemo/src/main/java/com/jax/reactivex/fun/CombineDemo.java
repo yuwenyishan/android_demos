@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.exceptions.Exceptions;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -101,5 +101,47 @@ public class CombineDemo extends DemoManage {
                         }, throwable -> Log.e(TAG, "groupJoin: ", throwable)
                         , () -> Log.d(TAG, "groupJoin: onComplete ."));
         subscriptionMap.put("groupJoin", subscription);
+    }
+
+    public void merge() {
+        //合并多个Observables的发射物
+        Observable<Long> observable1 = Observable.interval(1, TimeUnit.SECONDS).take(20).filter(aLong -> aLong % 2 != 0);
+        Observable<Long> observable2 = Observable.interval(1, TimeUnit.SECONDS).take(10).filter(aLong -> aLong % 2 == 0);
+        Observable<Long> observable = Observable
+                .merge(observable1, observable2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable
+                .subscribe(aLong -> {
+                            Log.d(TAG, "merge: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                            ToastUtil.showToast("merge onNext-> " + aLong);
+                        }, throwable -> Log.e(TAG, "merge: ", throwable)
+                        , () -> Log.d(TAG, "merge: onComplete ."));
+        subscriptionMap.put("merge", subscription);
+        mergeDelayError();
+    }
+
+    private void mergeDelayError() {
+        //mergeDelayError操作符会把错误放到所有结果都合并完成之后才执行
+        Observable<Long> error = Observable.error(new Exception("this is error ."));
+        Observable<Long> observable1 = Observable.interval(1, TimeUnit.SECONDS).take(10).filter(aLong -> aLong % 2 != 0)
+                .concatWith(error.delay(10, TimeUnit.SECONDS));
+        Observable<Long> observable2 = Observable.interval(1, TimeUnit.SECONDS).take(20).filter(aLong -> aLong % 2 == 0);
+        Observable<Long> observable = Observable
+                .mergeDelayError(observable1, observable2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable
+                .subscribe(aLong -> {
+                            Log.d(TAG, "mergeDelayError: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
+                            ToastUtil.showToast("mergeDelayError onNext-> " + aLong);
+                        }, throwable -> Log.e(TAG, "mergeDelayError: ", throwable)
+                        , () -> Log.d(TAG, "mergeDelayError: onComplete ."));
+        subscriptionMap.put("mergeDelayError", subscription);
+    }
+
+    public void startWith() {
+        //在数据序列的开头插入一条指定的项
+        Observable<Integer> observable = Observable.just(4, 5, 6).startWith(1, 2, 3);
     }
 }

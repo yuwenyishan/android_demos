@@ -23,6 +23,7 @@ public class CombineDemoActivity extends RootActivity {
         combineDemo = new CombineDemo();
         debounceOperation(findViewById(R.id.combinelatest), () -> combineDemo.combineLatest());
         debounceOperation(findViewById(R.id.join), () -> combineDemo.join());
+        debounceOperation(findViewById(R.id.merge), () -> combineDemo.merge());
     }
 
     @Override
