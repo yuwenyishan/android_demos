@@ -22,6 +22,7 @@ public class CombineDemoActivity extends RootActivity {
         setContentView(R.layout.activity_combine_demo);
         combineDemo = new CombineDemo();
         debounceOperation(findViewById(R.id.combinelatest), () -> combineDemo.combineLatest());
+        debounceOperation(findViewById(R.id.join), () -> combineDemo.join());
     }
 
     @Override
