@@ -24,6 +24,8 @@ public class CombineDemoActivity extends RootActivity {
         debounceOperation(findViewById(R.id.combinelatest), () -> combineDemo.combineLatest());
         debounceOperation(findViewById(R.id.join), () -> combineDemo.join());
         debounceOperation(findViewById(R.id.merge), () -> combineDemo.merge());
+        debounceOperation(findViewById(R.id.statWith), () -> combineDemo.startWith());
+        debounceOperation(findViewById(R.id.concatWith), () -> combineDemo.concatWith());
     }
 
     @Override

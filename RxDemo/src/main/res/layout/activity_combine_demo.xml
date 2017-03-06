@@ -42,5 +42,23 @@
             android:layout_marginTop="8dp"
             android:text="Merge" />
 
+        <Button
+            android:id="@+id/statWith"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/merge"
+            android:layout_marginTop="8dp"
+            android:text="StartWith" />
+
+        <Button
+            android:id="@+id/concatWith"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/statWith"
+            android:layout_marginTop="8dp"
+            android:text="ConcatWith" />
+
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

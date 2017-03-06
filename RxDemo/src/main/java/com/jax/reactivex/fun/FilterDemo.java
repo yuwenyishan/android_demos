@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
@@ -25,22 +24,19 @@ public class FilterDemo extends DemoManage {
         //仅在过了一段指定的时间还没发射数据时才发射一个数据
         //Debounce操作符会过滤掉发射速率过快的数据项。
         Observable<Long> observable = Observable
-                .create(new Observable.OnSubscribe<Long>() {
-                    @Override
-                    public void call(Subscriber<? super Long> subscriber) {
-                        if (subscriber.isUnsubscribed()) {
-                            return;
+                .create((Observable.OnSubscribe<Long>) subscriber -> {
+                    if (subscriber.isUnsubscribed()) {
+                        return;
+                    }
+                    try {
+                        for (long i = 1; i < 10; i++) {
+                            subscriber.onNext(i);
+                            Thread.sleep(i * 100);
                         }
-                        try {
-                            for (long i = 1; i < 10; i++) {
-                                subscriber.onNext(i);
-                                Thread.sleep(i * 100);
-                            }
-                            subscriber.onCompleted();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                            throw Exceptions.propagate(e);
-                        }
+                        subscriber.onCompleted();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -88,9 +84,7 @@ public class FilterDemo extends DemoManage {
                 .distinct(integer -> "key:" + integer % 3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        Subscription subscription = observable.subscribe(integer -> {
-            Log.d(TAG, "call: " + integer);
-        });
+        Subscription subscription = observable.subscribe(integer -> Log.d(TAG, "distinctFun call: " + integer));
         subscriptionMap.put("distinctFun", subscription);
     }
 
@@ -99,9 +93,7 @@ public class FilterDemo extends DemoManage {
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        Subscription subscription = observable.subscribe(integer -> {
-            Log.d(TAG, "call: " + integer);
-        });
+        Subscription subscription = observable.subscribe(integer -> Log.d(TAG, "distinctUntilChanged call: " + integer));
         subscriptionMap.put("distinctUntilChanged", subscription);
     }
 
@@ -323,7 +315,7 @@ public class FilterDemo extends DemoManage {
                     }
                     return integer;
                 })
-//                .takeLast(3)
+                .takeLast(3)
 //                .takeLast(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

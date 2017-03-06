@@ -10,7 +10,7 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
-import rx.functions.Func1;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -93,12 +93,12 @@ public class CombineDemo extends DemoManage {
                     return Observable.just(tRight).delay(2, TimeUnit.SECONDS);
                 },
                 (aLong, longObservable) -> longObservable.map(a -> a + aLong))
-                .subscribe(longObservable -> {
-                            longObservable.subscribe(aLong -> {
-                                Log.d(TAG, "groupJoin: onNext->" + aLong + " ThreadName-> " + Thread.currentThread().getName());
-                                ToastUtil.showToast("groupJoin onNext-> " + aLong);
-                            });
-                        }, throwable -> Log.e(TAG, "groupJoin: ", throwable)
+                .subscribe(longObservable ->
+                                longObservable.subscribe(aLong -> {
+                                    Log.d(TAG, "groupJoin: onNext->" + aLong + " ThreadName-> "
+                                            + Thread.currentThread().getName());
+                                    ToastUtil.showToast("groupJoin onNext-> " + aLong);
+                                }), throwable -> Log.e(TAG, "groupJoin: ", throwable)
                         , () -> Log.d(TAG, "groupJoin: onComplete ."));
         subscriptionMap.put("groupJoin", subscription);
     }
@@ -142,6 +142,47 @@ public class CombineDemo extends DemoManage {
 
     public void startWith() {
         //在数据序列的开头插入一条指定的项
-        Observable<Integer> observable = Observable.just(4, 5, 6).startWith(1, 2, 3);
+        Observable<Integer> observable = Observable.just(4, 5, 6)
+                .startWith(1, 2, 3)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(TAG, "startWith: onNext->" + integer + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("startWith onNext-> " + integer);
+                }, throwable -> Log.e(TAG, "startWith: ", throwable)
+                , () -> Log.d(TAG, "startWith: onComplete ."));
+        subscriptionMap.put("startWith", subscription);
+    }
+
+    public void concatWith() {
+        //在数据的末尾插入指定项
+        Observable<Integer> observable = Observable.just(4, 5, 6)
+                .concatWith(Observable.just(7, 8, 9))
+                .map(integer -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(TAG, "concatWith: onNext->" + integer + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("concatWith onNext-> " + integer);
+                }, throwable -> Log.e(TAG, "concatWith: ", throwable)
+                , () -> Log.d(TAG, "concatWith: onComplete ."));
+        subscriptionMap.put("concatWith", subscription);
     }
 }

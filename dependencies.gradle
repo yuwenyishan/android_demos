@@ -1,6 +1,6 @@
 ext {
-    supportLibraryVersion = '24.2.0'
-    aupportV4 = "19.1.0"
+    supportLibraryVersion = '25.2.0'
+    aupportV4 = "25.2.0"
     retrofitVersion = '2.1.0'
     rxJaveAndroidVersion = '1.1.0'
     rxBindingVersion = '1.0.0'
