@@ -60,5 +60,13 @@
             android:layout_marginTop="8dp"
             android:text="ConcatWith" />
 
+        <Button
+            android:id="@+id/switchOnNext"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/concatWith"
+            android:layout_marginTop="8dp"
+            android:text="SwitchOnNext" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

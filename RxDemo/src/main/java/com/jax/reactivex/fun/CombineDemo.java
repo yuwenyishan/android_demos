@@ -7,6 +7,7 @@ import com.jax.reactivex.util.ToastUtil;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
@@ -184,5 +185,43 @@ public class CombineDemo extends DemoManage {
                 }, throwable -> Log.e(TAG, "concatWith: ", throwable)
                 , () -> Log.d(TAG, "concatWith: onComplete ."));
         subscriptionMap.put("concatWith", subscription);
+    }
+
+    public void switchOnNext() {
+        //将一个发射多个Observables的Observable转换成另一个单独的Observable，后者发射那些Observables最近发射的数据项
+
+        Observable<Observable<String>> observable1 = Observable.create(
+                subscriber -> {
+                    for (int i = 0; i < 3; i++) {
+                        subscriber.onNext(createOb(i));
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            throw Exceptions.propagate(e);
+                        }
+                    }
+                });
+
+        Observable<String> observable = Observable.switchOnNext(observable1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(s -> {
+                    Log.d(TAG, "switchOnNext: onNext->" + s + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("switchOnNext onNext-> " + s);
+                }, throwable -> Log.e(TAG, "switchOnNext: ", throwable)
+                , () -> Log.d(TAG, "switchOnNext: onComplete ."));
+    }
+
+    private Observable<String> createOb(int index) {
+        return Observable.create((Observable.OnSubscribe<String>) subscriber -> {
+            for (int j = 0; j < 5; j++) {
+                subscriber.onNext(j + "-" + index);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw Exceptions.propagate(e);
+                }
+            }
+        }).subscribeOn(Schedulers.io());
     }
 }
