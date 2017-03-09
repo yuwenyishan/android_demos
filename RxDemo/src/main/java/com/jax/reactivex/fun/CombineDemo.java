@@ -12,6 +12,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
+import rx.functions.Func3;
 import rx.schedulers.Schedulers;
 
 /**
@@ -205,11 +206,13 @@ public class CombineDemo extends DemoManage {
         Observable<String> observable = Observable.switchOnNext(observable1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(s -> {
+        Subscription subscription = observable.subscribe(s -> {
                     Log.d(TAG, "switchOnNext: onNext->" + s + " ThreadName-> " + Thread.currentThread().getName());
                     ToastUtil.showToast("switchOnNext onNext-> " + s);
                 }, throwable -> Log.e(TAG, "switchOnNext: ", throwable)
                 , () -> Log.d(TAG, "switchOnNext: onComplete ."));
+
+        subscriptionMap.put("switchOnNext", subscription);
     }
 
     private Observable<String> createOb(int index) {
@@ -223,5 +226,56 @@ public class CombineDemo extends DemoManage {
                 }
             }
         }).subscribeOn(Schedulers.io());
+    }
+
+    public void zip() {
+        //通过一个函数将多个Observables的发射物结合到一起，基于这个函数的结果为每个结合体发射单个数据项。
+        //Zip操作符返回一个Obversable，它使用这个函数按顺序结合两个或多个Observables发射的数据项，
+        // 然后它发射这个函数返回的结果。它按照严格的顺序应用这个函数。
+        // 它只发射与发射数据项最少的那个Observable一样多的数据。
+        Observable<Integer> observable1 = Observable.just(1, 2, 3).map(integer -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw Exceptions.propagate(e);
+            }
+            Log.d(TAG, "zip: ob1->" + integer);
+            return integer;
+        });
+        Observable<Integer> observable2 = Observable.just(1, 2, 3, 4, 5).map(integer -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw Exceptions.propagate(e);
+            }
+            Log.d(TAG, "zip: ob2->" + integer);
+            return integer;
+        });
+        Observable<Integer> observable3 = Observable.just(1, 2, 3, 4, 5, 6, 7, 8).map(integer -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw Exceptions.propagate(e);
+            }
+            Log.d(TAG, "zip: ob3->" + integer);
+            return integer;
+        });
+
+        Observable<Integer> observable = Observable.zip(observable1, observable3, observable2,
+                (integer, integer2, integer3) -> {
+                    Log.d(TAG, "call: i1:" + integer + "i2:" + integer + "i3:" + integer);
+                    return integer + integer2 + integer3;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Log.d(TAG, "zip: start");
+        Subscription subscription = observable.subscribe(
+                s -> {
+                    Log.d(TAG, "zip: onNext->" + s + " ThreadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast("zip onNext-> " + s);
+                }, throwable -> Log.e(TAG, "zip: ", throwable)
+                , () -> Log.d(TAG, "zip: onComplete ."));
+
+        subscriptionMap.put("zip", subscription);
     }
 }
