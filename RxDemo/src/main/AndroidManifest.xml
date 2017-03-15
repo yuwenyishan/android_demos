@@ -45,6 +45,9 @@
         <activity
             android:name=".detail.CombineDemoActivity"
             android:label="合并操作" />
+        <activity
+            android:name=".detail.ErrorHandingDemoActivity"
+            android:label="错误处理" />
     </application>
 
 </manifest>
