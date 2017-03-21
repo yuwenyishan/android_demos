@@ -6,11 +6,15 @@ import com.jax.reactivex.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
+import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -157,10 +161,64 @@ public class ErrorHandingDemo extends DemoManage {
      */
 
     /**
-     *
+     * 无论收到多少次onError通知，无参数版本的retry都会继续订阅并发射原始Observable。
+     * <p>
+     * 接受单个count参数的retry会最多重新订阅指定的次数，如果次数超了，它不会尝试再次订阅，
+     * 它会把最新的一个onError通知传递给它的观察者。
+     * <p>
+     * 还有一个版本的retry接受一个谓词函数作为参数，这个函数的两个参数是：重试次数和导致发射onError通知的Throwable。
+     * 这个函数返回一个布尔值，如果返回true，retry应该再次订阅和镜像原始的Observable，如果返回false，
+     * retry会将最新的一个onError通知传递给它的观察者。
+     * <p>
+     * retry操作符默认在trampoline调度器上执行。
+     */
+    public void retry() {
+        Observable<Integer> observable = Observable
+                .create((Observable.OnSubscribe<Integer>) subscriber -> {
+                    Log.d(TAG, "retry: send error. ");
+                    subscriber.onNext(123);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    subscriber.onError(new Throwable("send error. "));
+                })
+                .retry(3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        logRx(observable, "retry");
+    }
+
+    /**
+     * retryWhen将onError中的Throwable传递给一个函数，这个函数产生另一个Observable，
+     * retryWhen观察它的结果再决定是不是要重新订阅原始的Observable。
+     * 如果这个Observable发射了一项数据，它就重新订阅，
+     * 如果这个Observable发射的是onError通知，它就将这个通知传递给观察者然后终止。
+     * <p>
+     * retryWhen操作符默认在trampoline调度器上执行。
      */
     public void retryWhen() {
-
+        Observable<Integer> observablet = Observable
+                .create((Observable.OnSubscribe<Integer>) subscriber -> {
+                    Log.d(TAG, "retryWhen: send error. ");
+                    subscriber.onNext(123);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    subscriber.onError(new Throwable("这是一个错误"));
+                })
+                .retryWhen(observable -> observable
+                        .zipWith(Observable.range(1, 3), (Func2<Throwable, Integer, Integer>) (throwable, integer) -> {
+                            Log.d(TAG, "call: " + integer + "次重试");
+                            return integer;
+                        })
+                        .flatMap((Func1<Integer, Observable<?>>) s -> Observable.timer(s, TimeUnit.SECONDS)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        logRx(observablet, "retryWhen");
     }
 
     private void logRx(Observable<Integer> observable, String tag) {

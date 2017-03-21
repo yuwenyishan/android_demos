@@ -23,5 +23,7 @@ public class ErrorHandingDemoActivity extends RootActivity {
         debounceOperation(findViewById(R.id.onErrorReturn), () -> demo.onErrorReturn());
         debounceOperation(findViewById(R.id.onErrorResumeNext), () -> demo.onErrorResumeNext());
         debounceOperation(findViewById(R.id.onExceptionResumeNext), () -> demo.onExceptionResumeNext());
+        debounceOperation(findViewById(R.id.retry), () -> demo.retry());
+        debounceOperation(findViewById(R.id.retryWhen), () -> demo.retryWhen());
     }
 }
