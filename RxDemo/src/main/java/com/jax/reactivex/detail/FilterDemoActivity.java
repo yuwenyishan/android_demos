@@ -110,4 +110,12 @@ public class FilterDemoActivity extends RootActivity {
                     }
                 }, throwable -> Log.e(TAG, "doubleClickDetect: onError-->", throwable));
     }
+
+    @Override
+    protected void onDestroy() {
+        if (demo != null) {
+            demo.onDestroy();
+        }
+        super.onDestroy();
+    }
 }

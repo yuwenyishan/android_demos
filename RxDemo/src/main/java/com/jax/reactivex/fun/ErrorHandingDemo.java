@@ -221,12 +221,4 @@ public class ErrorHandingDemo extends DemoManage {
         logRx(observablet, "retryWhen");
     }
 
-    private void logRx(Observable<Integer> observable, String tag) {
-        Subscription subscription = observable.subscribe(integer -> {
-                    Log.d(TAG, tag + ": " + integer);
-                    ToastUtil.showToast(tag + " onNext -> " + integer);
-                }, throwable -> Log.e(TAG, tag + " : onError -> ", throwable)
-                , () -> Log.d(TAG, tag + " : onComplete -> "));
-        subscriptionMap.put(tag, subscription);
-    }
 }

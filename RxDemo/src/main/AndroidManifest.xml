@@ -48,6 +48,9 @@
         <activity
             android:name=".detail.ErrorHandingDemoActivity"
             android:label="错误处理" />
+        <activity
+            android:name=".detail.AuxiliaryDemoActivity"
+            android:label="辅助操作" />
     </application>
 
 </manifest>

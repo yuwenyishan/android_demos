@@ -1,8 +1,15 @@
 package com.jax.reactivex.fun;
 
+import android.util.Log;
+
+import com.jax.reactivex.util.ToastUtil;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
+import rx.Observable;
 import rx.Subscription;
 
 /**
@@ -10,6 +17,7 @@ import rx.Subscription;
  */
 
 public class DemoManage {
+    public Executor single = Executors.newSingleThreadExecutor();
 
     public HashMap<String, Subscription> subscriptionMap = new HashMap<>();
 
@@ -20,5 +28,14 @@ public class DemoManage {
                 s.unsubscribe();
             }
         }
+    }
+
+    public void logRx(Observable<Integer> observable, String tag) {
+        Subscription subscription = observable.subscribe(integer -> {
+                    Log.d(getClass().getSimpleName(), tag + ": " + integer + " threadName-> " + Thread.currentThread().getName());
+                    ToastUtil.showToast(tag + " onNext -> " + integer);
+                }, throwable -> Log.e(getClass().getSimpleName(), tag + " : onError -> ", throwable)
+                , () -> Log.d(getClass().getSimpleName(), tag + " : onComplete -> "));
+        subscriptionMap.put(tag, subscription);
     }
 }

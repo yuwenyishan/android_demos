@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.jax.basedepend.BaseActivity;
 import com.jax.reactivex.bean.FunItemType;
+import com.jax.reactivex.detail.AuxiliaryDemoActivity;
 import com.jax.reactivex.detail.CreateDemoActivity;
 import com.jax.reactivex.detail.ErrorHandingDemoActivity;
 import com.jax.reactivex.detail.FilterDemoActivity;
@@ -49,6 +50,7 @@ public class MainActivity extends BaseActivity implements FunAdapter.ItemClickLi
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Filter过滤操作", "https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Filtering-Observables.html").setTarget(FilterDemoActivity.class));
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Combining结合操作", "https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Combining-Observables.html").setTarget(CombineDemoActivity.class));
         infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "Error处理操作", "https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Error-Handling-Operators.html").setTarget(ErrorHandingDemoActivity.class));
+        infos.add(new FunItemInfo(FunItemType.TYPE_DEMO, "辅助操作", "https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Observable-Utility-Operators.html").setTarget(AuxiliaryDemoActivity.class));
     }
 
     @Override

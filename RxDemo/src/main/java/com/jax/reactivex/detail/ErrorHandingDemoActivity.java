@@ -26,4 +26,12 @@ public class ErrorHandingDemoActivity extends RootActivity {
         debounceOperation(findViewById(R.id.retry), () -> demo.retry());
         debounceOperation(findViewById(R.id.retryWhen), () -> demo.retryWhen());
     }
+
+    @Override
+    protected void onDestroy() {
+        if (demo != null) {
+            demo.onDestroy();
+        }
+        super.onDestroy();
+    }
 }
