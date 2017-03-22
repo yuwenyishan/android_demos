@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Delay操作符" />
+
     <Button
         android:id="@+id/delay"
         style="@style/ButtonStyle"
@@ -19,4 +25,37 @@
         android:layout_height="wrap_content"
         android:text="delaySubscription" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Do操作符" />
+
+    <Button
+        android:id="@+id/doOnEach"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="doOnEach" />
+
+    <Button
+        android:id="@+id/doOnNextErrorComplete"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="doOnNextErrorComplete" />
+
+    <Button
+        android:id="@+id/doOnSubscribeOrNot"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="doOnSubscribeOrNot" />
+
+    <Button
+        android:id="@+id/doOnTerminateFinally"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="doOnTerminateFinally" />
 </LinearLayout>
