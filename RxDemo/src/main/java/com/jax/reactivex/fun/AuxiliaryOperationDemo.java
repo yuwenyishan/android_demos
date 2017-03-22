@@ -2,11 +2,17 @@ package com.jax.reactivex.fun;
 
 import android.util.Log;
 
+import com.jax.reactivex.util.ToastUtil;
+
 import java.util.concurrent.TimeUnit;
 
+import rx.Notification;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -61,6 +67,10 @@ public class AuxiliaryOperationDemo extends DemoManage {
      *
      * doOnEach 注册一个动作，对Observable发射的每个数据项使用
      * doOnNextErrorComplete doOnNext操作符类似于doOnEach(Action1)，但是它的Action不是接受一个Notification参数，而是接受发射的数据项。
+     * doOnSubscribe操作符注册一个动作，当观察者订阅它生成的Observable它就会被调用
+     * doOnUnsubscribe操作符注册一个动作，当观察者取消订阅它生成的Observable它就会被调用。
+     * doOnTerminate 操作符注册一个动作，当它产生的Observable终止之前会被调用，无论是正常还是异常终止。
+     * finallyDo 操作符注册一个动作，当它产生的Observable终止之后会被调用，无论是正常还是异常终止。
      */
 
     /**
@@ -174,5 +184,68 @@ public class AuxiliaryOperationDemo extends DemoManage {
                 .subscribeOn(Schedulers.from(single))
                 .observeOn(AndroidSchedulers.mainThread());
         logRx(observable, "doOnTerminateFinally");
+    }
+
+    /*
+     * Part 3 Materialize/Dematerialize
+     * Materialize将数据项和事件通知都当做数据项发射，Dematerialize刚好相反。
+     */
+
+    /**
+     * RxJava的materialize将来自原始Observable的通知转换为Notification对象，然后它返回的Observable会发射这些数据。
+     */
+    public void materialize() {
+        Observable<Notification<Integer>> observable = Observable
+                .just(1, 2, 3, 4, 5)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return integer;
+                })
+                .materialize()
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable
+                .subscribe(integerNotification -> {
+                            String s = "call: " + integerNotification.getValue()
+                                    + " key --> " + integerNotification.getKind();
+                            Log.d(TAG, s);
+                            ToastUtil.showToast(s);
+                        },
+                        throwable -> Log.e(TAG, "materialize: onError-> ", throwable),
+                        () -> Log.d(TAG, "materialize: onComplete ."));
+        subscriptionMap.put("Materialize", subscription);
+    }
+
+    /**
+     * Dematerialize操作符是Materialize的逆向过程，它将Materialize转换的结果还原成它原本的形式。
+     * 在调用dematerialize()之前必须先调用materialize()。
+     */
+    public void dematerialize() {
+        Observable<Object> observable = Observable
+                .just(1, 2, 3, 4, 5)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return integer;
+                })
+                .materialize()
+                .dematerialize()
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription subscription = observable
+                .subscribe(o -> {
+                            Log.d(TAG, "dematerialize: onNext" + o);
+                            ToastUtil.showToast("dematerialize onNext " + o);
+                        },
+                        throwable -> Log.e(TAG, "dematerialize: onError-> ", throwable),
+                        () -> Log.d(TAG, "dematerialize: onComplete ."));
+        subscriptionMap.put("dematerialize", subscription);
     }
 }

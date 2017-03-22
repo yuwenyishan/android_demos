@@ -26,6 +26,8 @@ public class AuxiliaryDemoActivity extends RootActivity {
         debounceOperation(findViewById(R.id.doOnNextErrorComplete), () -> demo.doOnNextErrorComplete());
         debounceOperation(findViewById(R.id.doOnSubscribeOrNot), () -> demo.doOnSubscribeOrNot());
         debounceOperation(findViewById(R.id.doOnTerminateFinally), () -> demo.doOnTerminateFinally());
+        debounceOperation(findViewById(R.id.materialize), () -> demo.materialize());
+        debounceOperation(findViewById(R.id.dematerialize), () -> demo.dematerialize());
     }
 
     @Override

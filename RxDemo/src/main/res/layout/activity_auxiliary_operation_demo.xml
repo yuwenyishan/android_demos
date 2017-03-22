@@ -58,4 +58,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="doOnTerminateFinally" />
+
+    <Button
+        android:id="@+id/materialize"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="materialize" />
+
+    <Button
+        android:id="@+id/dematerialize"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dematerialize" />
 </LinearLayout>
