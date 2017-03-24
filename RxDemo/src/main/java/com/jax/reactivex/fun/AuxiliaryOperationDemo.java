@@ -9,10 +9,9 @@ import java.util.concurrent.TimeUnit;
 import rx.Notification;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -248,4 +247,99 @@ public class AuxiliaryOperationDemo extends DemoManage {
                         () -> Log.d(TAG, "dematerialize: onComplete ."));
         subscriptionMap.put("dematerialize", subscription);
     }
+
+    /*
+     * Part 4 Serialize
+     * 强制一个Observable连续调用并保证行为正确
+     */
+
+    public void serialize() {
+        serializeTest1();
+        serializeTest2();
+        Observable<Integer> observable = Observable
+                .create((Observable.OnSubscribe<Integer>) subscriber -> {
+                    subscriber.onNext(1);
+                    subscriber.onNext(2);
+                    subscriber.onCompleted();
+                    subscriber.onNext(3);
+                    subscriber.onCompleted();
+                })
+                .doOnUnsubscribe(() -> Log.d(TAG, "serialize: unsubscribe"))
+                .serialize()
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription sub = observable
+                .unsafeSubscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "serialize onCompleted .");
+                        ToastUtil.showToast("serialize onCompleted .");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "serialize onError: ", e);
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        String s = "serialize onNext: " + integer;
+                        Log.d(TAG, s);
+                        ToastUtil.showToast(s);
+                    }
+                });
+        subscriptionMap.put("serialize", sub);
+    }
+
+    private void serializeTest1() {
+        Observable<Integer> observable = Observable
+                .create((Observable.OnSubscribe<Integer>) subscriber -> {
+                    subscriber.onNext(1);
+                    subscriber.onNext(2);
+                    subscriber.onCompleted();
+                    subscriber.onNext(3);
+                    subscriber.onCompleted();
+                })
+                .doOnUnsubscribe(() -> Log.d(TAG, "serializeTest1: unsubscribe"))
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+        logRx(observable, "serializeTest1");
+    }
+
+    private void serializeTest2() {
+        Observable<Integer> observable = Observable
+                .create((Observable.OnSubscribe<Integer>) subscriber -> {
+                    subscriber.onNext(1);
+                    subscriber.onNext(2);
+                    subscriber.onCompleted();
+                    subscriber.onNext(3);
+                    subscriber.onCompleted();
+                })
+                .doOnUnsubscribe(() -> Log.d(TAG, "serializeTest2: unsubscribe"))
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+        Subscription sub = observable
+                .unsafeSubscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "serializeTest2 onCompleted .");
+                        ToastUtil.showToast("serializeTest2 onCompleted .");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "serializeTest2 onError: ", e);
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        String s = "serializeTest2 onNext: " + integer;
+                        Log.d(TAG, s);
+                        ToastUtil.showToast(s);
+                    }
+                });
+        subscriptionMap.put("serializeTest2", sub);
+    }
+
+
 }
