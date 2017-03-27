@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * reference https://github.com/AlexKrupa/android-springanimation-examples
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
