@@ -32,8 +32,8 @@ public class ConstraintAnimator extends BaseActivity {
     }
 
     public void onApplyClick(View view) {
-//        marginConnect();
-        chainPacked();
+        marginConnect();
+//        chainPacked();
         applyConstraintSet.applyTo(constraintLayout);
     }
 
@@ -64,7 +64,7 @@ public class ConstraintAnimator extends BaseActivity {
 
 
         applyConstraintSet.centerHorizontally(R.id.button1, R.id.main);
-        applyConstraintSet.centerHorizontally(R.id.button2, R.id.main);
+//        applyConstraintSet.centerHorizontally(R.id.button2, R.id.main);
         applyConstraintSet.centerHorizontally(R.id.button3, R.id.main);
         applyConstraintSet.centerVertically(R.id.button3, R.id.main);
     }
@@ -90,9 +90,9 @@ public class ConstraintAnimator extends BaseActivity {
         applyConstraintSet.connect(R.id.button2, ConstraintSet.RIGHT, R.id.button3, ConstraintSet.LEFT, 0);
         applyConstraintSet.connect(R.id.button3, ConstraintSet.LEFT, R.id.button2, ConstraintSet.RIGHT, 0);
 
-        applyConstraintSet.createHorizontalChain(R.id.button1,
-                R.id.button3,
-                new int[]{R.id.button1, R.id.button3}, null, ConstraintWidget.CHAIN_PACKED);
+        applyConstraintSet.createHorizontalChain(R.id.main, ConstraintSet.LEFT,
+                R.id.main, ConstraintSet.RIGHT,
+                new int[]{R.id.button1, R.id.button2, R.id.button3}, null, ConstraintWidget.CHAIN_PACKED);
 
         applyConstraintSet.constrainWidth(R.id.button1, ConstraintSet.WRAP_CONTENT);
         applyConstraintSet.constrainWidth(R.id.button2, ConstraintSet.WRAP_CONTENT);

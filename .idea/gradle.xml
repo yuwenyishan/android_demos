@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/BaseDepend" />
             <option value="$PROJECT_DIR$/ConstraintLayout" />
             <option value="$PROJECT_DIR$/RxDemo" />
+            <option value="$PROJECT_DIR$/SpringAnimation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
