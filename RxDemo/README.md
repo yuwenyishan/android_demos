@@ -77,9 +77,9 @@ a demo for show how to use ReactiveX( RxJava & RxAndroid ) in Android Apps.
 * **Serialize( Fail )** 
 * ~~Subscribe~~
 * ~~SubscribeOn~~
-* TimeInterval
-* Timeout
-* Timestamp
+* ~~TimeInterval~~
+* ~~Timeout~~
+* ~~Timestamp~~
 * Using
 * To
 

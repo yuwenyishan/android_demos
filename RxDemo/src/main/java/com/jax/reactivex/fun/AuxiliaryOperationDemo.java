@@ -12,8 +12,12 @@ import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.exceptions.Exceptions;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import rx.schedulers.TimeInterval;
+import rx.schedulers.Timestamped;
 
 /**
  * Created on 2017/3/21.
@@ -341,5 +345,107 @@ public class AuxiliaryOperationDemo extends DemoManage {
         subscriptionMap.put("serializeTest2", sub);
     }
 
+    /*
+     * Part 5 TimeInterval
+     *
+     * 将一个发射数据的Observable转换为发射那些数据发射时间间隔的Observable
+     */
+
+    /**
+     * TimeInterval操作符拦截原始Observable发射的数据项，替换为发射表示相邻发射物时间间隔的对象
+     * <p>
+     * timeInterval默认在immediate调度器上执行，你可以通过传参数修改。
+     */
+    public void timeInterval() {
+        Observable<Integer> observable = Observable
+                .just(1, 2, 3, 4)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(integer * 1000);
+                    } catch (InterruptedException e) {
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+        Observable<TimeInterval<Integer>> longObservable = observable.timeInterval();
+        Subscription subscription = longObservable
+                .subscribe(integerTimeInterval -> {
+                    String s = "timeInterval onNext: " + integerTimeInterval.getValue() +
+                            " time: -> " + integerTimeInterval.getIntervalInMilliseconds();
+                    Log.d(TAG, s);
+                    ToastUtil.showToast(s);
+                }, throwable -> Log.e(TAG, "timeInterval: ", throwable), () -> {
+                    Log.d(TAG, "timeInterval onCompleted .");
+                    ToastUtil.showToast("timeInterval onCompleted .");
+                });
+        subscriptionMap.put("timeInterval", subscription);
+    }
+
+    /*
+     * Part 6 Timeout
+     *
+     * 对原始Observable的一个镜像，如果过了一个指定的时长仍没有发射数据，它会发一个错误通知
+     */
+
+    /**
+     * 如果原始Observable过了指定的一段时长没有发射任何数据，Timeout操作符会以一个onError通知终止这个Observable。
+     */
+    public void timeout() {
+        Observable<Integer> observable = Observable
+                .just(1, 2, 3, 4)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(integer * 1000);
+                    } catch (InterruptedException e) {
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+//                .timeout(2500, TimeUnit.MILLISECONDS)
+                .timeout(2500, TimeUnit.MILLISECONDS, Observable.range(10, 15))
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+        logRx(observable, "timeout");
+    }
+
+    /*
+     * Part Timestamp
+     *
+     * 给Observable发射的数据项附加一个时间戳
+     */
+
+    /**
+     * 它将一个发射T类型数据的Observable转换为一个发射类型为Timestamped<T>的数据的Observable，
+     * 每一项都包含数据的原始发射时间。
+     */
+    public void timestamp() {
+        Observable<Timestamped<Integer>> observable = Observable
+                .just(1, 2, 3, 4)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(integer * 1000);
+                    } catch (InterruptedException e) {
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                })
+                .timestamp()
+                .subscribeOn(Schedulers.from(single))
+                .observeOn(AndroidSchedulers.mainThread());
+
+        Subscription subscription = observable
+                .subscribe(integerTimestamped -> {
+                    String s = "timestamp onNext: " + integerTimestamped.getValue() +
+                            " timestamp: -> " + integerTimestamped.getTimestampMillis();
+                    Log.d(TAG, s);
+                    ToastUtil.showToast(s);
+                }, throwable -> Log.e(TAG, "timestamp: ", throwable), () -> {
+                    Log.d(TAG, "timestamp onCompleted .");
+                    ToastUtil.showToast("timestamp onCompleted .");
+                });
+        subscriptionMap.put("timestamp", subscription);
+    }
 
 }

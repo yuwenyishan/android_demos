@@ -29,6 +29,9 @@ public class AuxiliaryDemoActivity extends RootActivity {
         debounceOperation(findViewById(R.id.materialize), () -> demo.materialize());
         debounceOperation(findViewById(R.id.dematerialize), () -> demo.dematerialize());
         debounceOperation(findViewById(R.id.serialize), () -> demo.serialize());
+        debounceOperation(findViewById(R.id.timeInterval), () -> demo.timeInterval());
+        debounceOperation(findViewById(R.id.timeout), () -> demo.timeout());
+        debounceOperation(findViewById(R.id.timestamp), () -> demo.timestamp());
     }
 
     @Override
