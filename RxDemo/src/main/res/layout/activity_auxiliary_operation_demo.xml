@@ -104,5 +104,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="timestamp" />
+
+        <Button
+            android:id="@+id/using"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="using" />
+
+        <Button
+            android:id="@+id/to"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

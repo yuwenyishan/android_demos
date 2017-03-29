@@ -4,6 +4,14 @@ import android.util.Log;
 
 import com.jax.reactivex.util.ToastUtil;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import rx.Notification;
@@ -14,7 +22,10 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
+import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.observables.BlockingObservable;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TimeInterval;
 import rx.schedulers.Timestamped;
@@ -411,7 +422,7 @@ public class AuxiliaryOperationDemo extends DemoManage {
     }
 
     /*
-     * Part Timestamp
+     * Part 7 Timestamp
      *
      * 给Observable发射的数据项附加一个时间戳
      */
@@ -448,4 +459,196 @@ public class AuxiliaryOperationDemo extends DemoManage {
         subscriptionMap.put("timestamp", subscription);
     }
 
+    /*
+     * Part 8 using
+     *
+     * 创建一个只在Observable生命周期内存在的一次性资源
+     */
+
+    /**
+     * 当一个观察者订阅using返回的Observable时，
+     * using将会使用Observable工厂函数创建观察者要观察的Observable，
+     * 同时使用资源工厂函数创建一个你想要创建的资源。当观察者取消订阅这个Observable时，
+     * 或者当观察者终止时（无论是正常终止还是因错误而终止），using使用第三个函数释放它创建的资源。
+     * <p>
+     * using默认不在任何特定的调度器上执行。
+     */
+    public void using() {
+        Observable<Integer> observable =
+                Observable.using(() -> {
+                            Log.d(TAG, "using: resFactory -> ");
+                            return 233;
+                        },
+                        new Func1<Integer, Observable<Integer>>() {
+                            @Override
+                            public Observable<Integer> call(Integer s) {
+                                Log.d(TAG, "call: observable -> factory ->" + s);
+                                return Observable.just(s);
+                            }
+                        }, s -> {
+                            Log.d(TAG, "using: s-> " + s);
+                            s = 0;
+                            Log.d(TAG, "using: s-> -> " + s);
+                        })
+                        .subscribeOn(Schedulers.from(single))
+                        .observeOn(AndroidSchedulers.mainThread());
+        logRx(observable, "using");
+    }
+
+    /*
+     * Part 9 To
+     *
+     * 将Observable转换为另一个对象或数据结构
+     */
+
+
+    public void to() {
+        Observable<Integer> observable = Observable.just(1, 3, 5, 2, 4)
+                .map(integer -> {
+                    try {
+                        Thread.sleep(integer * 100);
+//                        Log.d(TAG, "to: map -> " + integer);
+                    } catch (InterruptedException e) {
+                        throw Exceptions.propagate(e);
+                    }
+                    return integer;
+                });
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+        logRx(observable, "to");
+        getIterator(observable);
+        toFuture(observable);
+        toIterable(observable);
+        toList(observable);
+        toMap(observable);
+        toMultiMap(observable);
+        toSortedList(observable);
+        nest(observable);
+    }
+
+    /**
+     * 这个操作符将Observable转换为一个Iterator，你可以通过它迭代原始Observable发射的数据集。
+     * <p>
+     * getIterator操作符只能用于BlockingObservable的子类，要使用它，
+     * 你首先必须把原始的Observable转换为一个BlockingObservable。
+     * 可以使用这两个操作符：BlockingObservable.from或the Observable.toBlocking。
+     */
+    private void getIterator(Observable<Integer> observable) {
+        Iterator<Integer> iterator = observable.toBlocking().getIterator();
+        while (iterator.hasNext()) {
+            Log.d(TAG, "getIterator: -> " + iterator.next());
+        }
+    }
+
+    /**
+     * toFuture操作符也是只能用于BlockingObservable
+     * <p>
+     * 这个操作符将Observable转换为一个返回单个数据项的Future，
+     * 如果原始Observable发射多个数据项，Future会收到一个IllegalArgumentException；
+     * 如果原始Observable没有发射任何数据，Future会收到一个NoSuchElementException。
+     */
+    private void toFuture(Observable<Integer> observable) {
+        Future<List<Integer>> future = BlockingObservable.from(observable.toList()).toFuture();
+        try {
+            Log.d(TAG, "toFuture: --> " + future.get());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 这个操作符将Observable转换为一个Iterable，你可以通过它迭代原始Observable发射的数据集。
+     */
+    private void toIterable(Observable<Integer> observable) {
+        Iterable<Integer> iterable = observable.toBlocking().toIterable();
+        for (Integer i : iterable) {
+            Log.d(TAG, "toIterable: -> " + i);
+        }
+    }
+
+    /**
+     * 通常，发射多项数据的Observable会为每一项数据调用onNext方法。你可以用toList操作符改变这个行为，
+     * 让Observable将多项数据组合成一个List，然后调用一次onNext方法传递整个列表。
+     */
+    private void toList(Observable<Integer> observable) {
+        Observable<List<Integer>> listObservable = observable.toList();
+        Subscription subscription = listObservable
+                .subscribe(integers -> Log.d(TAG, "call: toList -> " + integers),
+                        throwable -> Log.e(TAG, "toList: onError ->", throwable),
+                        () -> Log.d(TAG, "toList: onComplete ."));
+        subscriptionMap.put("toList", subscription);
+    }
+
+    /**
+     * toMap收集原始Observable发射的所有数据项到一个Map（默认是HashMap）然后发射这个Map
+     * 你可以提供一个用于生成Map的Key的函数，还可以提供一个函数转换数据项到Map存储的值（默认数据项本身就是值）。
+     * <p>
+     * ps:相同的键所对于的值会被覆盖
+     */
+    private void toMap(Observable<Integer> observable) {
+        Observable<Map<String, Integer>> mapObservable = observable
+//                .toMap(integer -> integer > 3 ? ">3" : (integer == 3 ? "=3" : "<3"));
+                .toMap(integer -> integer > 3 ? ">3" : (integer == 3 ? "=3" : "<3"),
+                        integer -> integer * integer);
+
+        Subscription subscription = mapObservable
+                .subscribe(stringIntegerMap -> {
+                            Set<Map.Entry<String, Integer>> entries = stringIntegerMap.entrySet();
+                            for (Map.Entry<String, Integer> entry : entries) {
+                                Log.d(TAG, "toMap: onNext -> " + "key -> " + entry.getKey() + " value -> " + entry.getValue());
+                            }
+                        }, throwable -> Log.e(TAG, "toMap: onError ->", throwable),
+                        () -> Log.d(TAG, "toMap: onComplete ."));
+        subscriptionMap.put("toMap", subscription);
+    }
+
+    /**
+     * toMultiMap类似于toMap
+     * 不同的是，它生成的这个Map同时还是一个ArrayList（默认是这样，你可以传递一个可选的工厂方法修改这个行为）。
+     * <p>
+     * 相同的键，不同的值会存储再collection中
+     */
+    private void toMultiMap(Observable<Integer> observable) {
+        Observable<Map<String, Collection<Integer>>> listObservable = observable
+                .toMultimap(integer -> integer > 3 ? ">3" : (integer == 3 ? "=3" : "<3")
+                        , integer -> integer * integer);
+        Subscription subscription = listObservable
+                .subscribe(stringCollectionMap -> {
+                            Set<Map.Entry<String, Collection<Integer>>> sets = stringCollectionMap.entrySet();
+                            for (Map.Entry<String, Collection<Integer>> s : sets) {
+                                Log.d(TAG, "toMultiMap: onNext -> " + "key: " + s.getKey() + " value: " + s.getValue().toString());
+                            }
+                        },
+                        throwable -> Log.e(TAG, "toMultiMap: onError ->", throwable),
+                        () -> Log.d(TAG, "toMultiMap: onComplete ."));
+        subscriptionMap.put("toMultiMap", subscription);
+    }
+
+    /**
+     * toSortedList类似于toList
+     * 不同的是，它会对产生的列表排序，默认是自然升序，如果发射的数据项没有实现Comparable接口，会抛出一个异常。
+     */
+    private void toSortedList(Observable<Integer> observable) {
+        Observable<List<Integer>> list = observable.toSortedList((integer, integer2) -> {
+            //倒序
+            return integer2 < integer ? -1 : 1;
+        });
+        Subscription subscription = list
+                .subscribe(integers -> Log.d(TAG, "toSortedList: onNext -> " + integers),
+                        throwable -> Log.e(TAG, "toSortedList: onError ->", throwable),
+                        () -> Log.d(TAG, "toSortedList: onComplete ."));
+        subscriptionMap.put("toSortedList", subscription);
+    }
+
+    private void nest(Observable<Integer> observable) {
+        Observable<Observable<Integer>> nest = observable.nest();
+        Subscription subscription = nest
+                .subscribe(observable1 -> observable1.subscribe(
+                        integers -> Log.d(TAG, "nest nest: onNext -> " + integers),
+                        throwable -> Log.e(TAG, "nest nest: onError ->", throwable),
+                        () -> Log.d(TAG, "nest nest: onComplete .")),
+                        throwable -> Log.e(TAG, "nest: onError ->", throwable),
+                        () -> Log.d(TAG, "nest: onComplete ."));
+        subscriptionMap.put("nest", subscription);
+    }
 }

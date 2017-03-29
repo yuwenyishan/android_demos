@@ -80,8 +80,8 @@ a demo for show how to use ReactiveX( RxJava & RxAndroid ) in Android Apps.
 * ~~TimeInterval~~
 * ~~Timeout~~
 * ~~Timestamp~~
-* Using
-* To
+* ~~Using~~
+* ~~To~~
 
 ### ConditionOperation(条件和布尔操作)
 
