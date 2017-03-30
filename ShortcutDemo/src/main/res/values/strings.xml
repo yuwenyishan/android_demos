@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ShortcutDemo</string>
+
+    <string name="shortcutDisabledMessage1">shortcut1 is Enable !</string>
+    <string name="static_shortcut_long_label1">shortcut1_long_label_1</string>
+    <string name="static_shortcut_short_label1">short_label_1</string>
+
+    <string name="shortcutDisabledMessage2">shortcut2 is Enable !</string>
+    <string name="static_shortcut_long_label2">shortcut1_long_label_2</string>
+    <string name="static_shortcut_short_label2">short_label_2</string>
+
+    <string name="shortcutDisabledMessage3">shortcut3 is Enable !</string>
+    <string name="static_shortcut_long_label3">shortcut3_long_label_3</string>
+    <string name="static_shortcut_short_label3">short_label_3</string>
+
+    <string name="shortcutDisabledMessage4">shortcut4 is Enable !</string>
+    <string name="static_shortcut_long_label4">shortcut4_long_label_4</string>
+    <string name="static_shortcut_short_label4">short_label_4</string>
+
+    <string name="shortcutDisabledMessage5">shortcut5 is Enable !</string>
+    <string name="static_shortcut_long_label5">shortcut5_long_label_5</string>
+    <string name="static_shortcut_short_label5">short_label_5</string>
+</resources>

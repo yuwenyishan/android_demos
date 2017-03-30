@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/circle_shape"
+        android:shortcutDisabledMessage="@string/shortcutDisabledMessage1"
+        android:shortcutId="static1"
+        android:shortcutLongLabel="@string/static_shortcut_long_label1"
+        android:shortcutShortLabel="@string/static_shortcut_short_label1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.jax.shortcutdemo.MainActivity"
+            android:targetPackage="com.jax.shortcutdemo" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.jax.shortcutdemo.ShortCut1Activity"
+            android:targetPackage="com.jax.shortcutdemo" />>
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/circle_shape_blue"
+        android:shortcutDisabledMessage="@string/shortcutDisabledMessage2"
+        android:shortcutId="static2"
+        android:shortcutLongLabel="@string/static_shortcut_long_label2"
+        android:shortcutShortLabel="@string/static_shortcut_short_label2">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.jax.shortcutdemo.MainActivity"
+            android:targetPackage="com.jax.shortcutdemo" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.jax.shortcutdemo.ShortCut2Activity"
+            android:targetPackage="com.jax.shortcutdemo" />>
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/circle_shape_black"
+        android:shortcutDisabledMessage="@string/shortcutDisabledMessage5"
+        android:shortcutId="static5"
+        android:shortcutLongLabel="@string/static_shortcut_long_label5"
+        android:shortcutShortLabel="@string/static_shortcut_short_label5">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.jax.shortcutdemo.MainActivity"
+            android:targetPackage="com.jax.shortcutdemo" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.jax.shortcutdemo.Shortcut5Activity"
+            android:targetPackage="com.jax.shortcutdemo" />>
+    </shortcut>
+</shortcuts>
