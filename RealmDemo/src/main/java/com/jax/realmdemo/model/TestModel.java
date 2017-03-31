@@ -9,6 +9,7 @@ public class TestModel {
     private String type;
     private String name;
     private String header;
+    private int age;
 
     public String getId() {
         return id;
@@ -40,5 +41,13 @@ public class TestModel {
 
     public void setHeader(String header) {
         this.header = header;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

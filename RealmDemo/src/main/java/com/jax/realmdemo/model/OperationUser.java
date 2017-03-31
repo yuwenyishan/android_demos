@@ -10,6 +10,7 @@ public class OperationUser extends RealmObject {
 
     private String name;
     private String headerUrl;
+    private int age = 0;
 
     public String getName() {
         return name;
@@ -27,8 +28,16 @@ public class OperationUser extends RealmObject {
         this.headerUrl = headerUrl;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
-        return "name : " + name + " headerUrl : " + headerUrl;
+        return "[ name : " + name + " headerUrl : " + headerUrl + " age: " + age + "]";
     }
 }

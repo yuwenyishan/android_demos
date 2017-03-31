@@ -5,12 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.jax.realmdemo.bean.NotificationType;
-import com.jax.realmdemo.model.Notification;
 import com.jax.realmdemo.model.NotificationHelper;
 import com.jax.realmdemo.model.TestModel;
-
-import java.util.Date;
 
 import io.realm.Realm;
 
@@ -26,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         helper.getRealm();
         findViewById(R.id.button_add).setOnClickListener(this);
         findViewById(R.id.button_log).setOnClickListener(this);
+        findViewById(R.id.button_delete).setOnClickListener(this);
     }
 
     @Override
@@ -43,15 +40,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_log:
                 helper.logAll();
                 break;
+            case R.id.button_delete:
+                delete();
+                break;
         }
     }
 
     private void add() {
         TestModel testModel = new TestModel();
-        testModel.setId("dynamic_0002");
-        testModel.setType("type3");
-        testModel.setName("小花3");
-        testModel.setHeader("http://ddsdfd.jpg");
+        testModel.setId("dynamic_0006");
+        testModel.setType("type5");
+        testModel.setAge(12);
+        testModel.setName("版本2");
+        testModel.setHeader("http://版本2数聚.jpg");
 
         helper.addOrUpdateNotification(testModel,
                 new Realm.Transaction.OnSuccess() {
@@ -65,5 +66,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d(TAG, "addOrUpdateNotification onError: ");
                     }
                 });
+    }
+
+    private void delete() {
+        TestModel testModel = new TestModel();
+        testModel.setId("dynamic_0006");
+        testModel.setType("type5");
+        testModel.setName("版本2");
+        testModel.setAge(12);
+        testModel.setHeader("http://版本2数聚.jpg");
+        helper.deleteNotification(testModel, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "delete onSuccess: ");
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                Log.d(TAG, "delete onError: ");
+            }
+        });
     }
 }

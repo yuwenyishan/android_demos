@@ -21,7 +21,7 @@ public class RealmHelper {
 
         RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name("realmDemo.realm")
-                .schemaVersion(1)
+                .schemaVersion(4)
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(configuration);

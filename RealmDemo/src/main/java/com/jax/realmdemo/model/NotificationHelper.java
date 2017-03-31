@@ -8,6 +8,7 @@ import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created on 2017/3/30.
@@ -39,8 +40,11 @@ public class NotificationHelper {
         realm.close();
     }
 
+    /**
+     * 更新或者创建数据
+     */
     public void addOrUpdateNotification(final TestModel testModel, Realm.Transaction.OnSuccess onSuccess,
-                                         Realm.Transaction.OnError onError) {
+                                        Realm.Transaction.OnError onError) {
         @NotificationType.Type final String type = getType(testModel.getType());
         final String primary_id = testModel.getId() + type;
         realm.executeTransactionAsync(new Realm.Transaction() {
@@ -53,6 +57,7 @@ public class NotificationHelper {
                     OperationUser user = new OperationUser();
                     user.setName(testModel.getName());
                     user.setHeaderUrl(testModel.getHeader());
+                    user.setAge(testModel.getAge());
                     notification.addOperator(user);
                     notification.setTime(new Date().getTime());
                     realm.copyToRealmOrUpdate(notification);
@@ -64,17 +69,44 @@ public class NotificationHelper {
                     OperationUser user = new OperationUser();
                     user.setName(testModel.getName());
                     user.setHeaderUrl(testModel.getHeader());
+                    user.setAge(testModel.getAge());
                     notification.addOperator(user);
                 }
             }
         }, onSuccess, onError);
     }
 
+    public void deleteNotification(TestModel testModel, Realm.Transaction.OnSuccess onSuccess,
+                                   Realm.Transaction.OnError onError) {
+        @NotificationType.Type final String type = getType(testModel.getType());
+        final String primary_id = testModel.getId() + type;
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Notification notification = realm.where(Notification.class).equalTo("primaryId", primary_id).findFirst();
+                if (notification != null) {
+                    notification.deleteFromRealm();
+                }
+            }
+        }, onSuccess, onError);
+    }
+
+    /**
+     * 条件查询，Realm 支持以下查询条件（来源于官网）：
+     * between()、greaterThan()、lessThan()、greaterThanOrEqualTo() 和 lessThanOrEqualTo()
+     * equalTo() 和 notEqualTo()
+     * contains()、beginsWith() 和 endsWith()
+     * isNull() 和 isNotNull()
+     * isEmpty() 和 isNotEmpty()
+     * <p>
+     * 聚合查询，支持的聚合操作有sum，min，max，average
+     */
     public void logAll() {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmResults<Notification> results = realm.where(Notification.class).findAll();
+                RealmResults<Notification> results = realm.where(Notification.class).findAll().sort("time", Sort.DESCENDING);
                 for (Notification n : results) {
                     Log.d(TAG, "execute: " + n.toString());
                 }
