@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" filepath="$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/Demos.iml" filepath="$PROJECT_DIR$/Demos.iml" />
       <module fileurl="file://$PROJECT_DIR$/DownloadManager/DownloadManager.iml" filepath="$PROJECT_DIR$/DownloadManager/DownloadManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileProvider/FileProvider.iml" filepath="$PROJECT_DIR$/FileProvider/FileProvider.iml" />
       <module fileurl="file://$PROJECT_DIR$/RealmDemo/RealmDemo.iml" filepath="$PROJECT_DIR$/RealmDemo/RealmDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/RxDemo/RxDemo.iml" filepath="$PROJECT_DIR$/RxDemo/RxDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/ShortcutDemo/ShortcutDemo.iml" filepath="$PROJECT_DIR$/ShortcutDemo/ShortcutDemo.iml" />

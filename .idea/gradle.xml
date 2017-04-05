@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/BaseDepend" />
             <option value="$PROJECT_DIR$/ConstraintLayout" />
             <option value="$PROJECT_DIR$/DownloadManager" />
+            <option value="$PROJECT_DIR$/FileProvider" />
             <option value="$PROJECT_DIR$/RealmDemo" />
             <option value="$PROJECT_DIR$/RxDemo" />
             <option value="$PROJECT_DIR$/ShortcutDemo" />
