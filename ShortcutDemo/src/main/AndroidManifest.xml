@@ -18,10 +18,14 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:host="jax"
-                    android:path="/demo"
-                    android:scheme="shortcut" />
+                    android:host="demos"
+                    android:path="/shortcut"
+                    android:scheme="jax" />
             </intent-filter>
 
             <meta-data
