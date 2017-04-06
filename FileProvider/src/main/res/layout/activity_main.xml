@@ -15,4 +15,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/take_photo_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="takePhoto(origin file://)"
+        android:textAllCaps="false" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/take_photo_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="takePhoto(fileProvider content://)"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/take_photo_1" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/take_photo_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="takePhoto(fileProvider content:// public folders)"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/take_photo_2" />
+
 </android.support.constraint.ConstraintLayout>
