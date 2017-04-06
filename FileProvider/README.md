@@ -62,15 +62,15 @@ provider_path.xml
 </paths>
 ```
 
-**<files-path name="name" path="path" /> == Context.getFilesDir( ).**
+**\<files-path name="name" path="path" /\> == Context.getFilesDir( ).**
 
-**<cache-path name="name" path="path" /> ==  Context.getCacheDir().**
+**\<cache-path name="name" path="path" /\> ==  Context.getCacheDir().**
 
-**<external-path name="name" path="path" /> == Environment.getExternalStorageDirectory().**
+**\<external-path name="name" path="path" /\> == Environment.getExternalStorageDirectory().**
 
-**<external-files-path name="name" path="path" /> == Context.getExternalFilesDir(String).**
+**\<external-files-path name="name" path="path" /\> == Context.getExternalFilesDir(String).**
 
-**<external-cache-path name="name" path="path" /> == Context.getExternalCacheDir().**
+**\<external-cache-path name="name" path="path" /\> == Context.getExternalCacheDir().**
 
 **name** A URI path segment. Should be show in content Uri.
 
