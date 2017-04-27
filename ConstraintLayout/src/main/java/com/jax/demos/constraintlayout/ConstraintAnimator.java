@@ -32,8 +32,9 @@ public class ConstraintAnimator extends BaseActivity {
     }
 
     public void onApplyClick(View view) {
-        marginConnect();
+//        marginConnect();
 //        chainPacked();
+        testConnect();
         applyConstraintSet.applyTo(constraintLayout);
     }
 
@@ -67,6 +68,12 @@ public class ConstraintAnimator extends BaseActivity {
 //        applyConstraintSet.centerHorizontally(R.id.button2, R.id.main);
         applyConstraintSet.centerHorizontally(R.id.button3, R.id.main);
         applyConstraintSet.centerVertically(R.id.button3, R.id.main);
+    }
+
+    private void testConnect() {
+        TransitionManager.beginDelayedTransition(constraintLayout);
+        applyConstraintSet.setVisibility(R.id.button2, ConstraintSet.VISIBLE);
+        applyConstraintSet.connect(R.id.button2, ConstraintSet.TOP, R.id.button1, ConstraintSet.BOTTOM, 0);
     }
 
     private void chainPacked() {
