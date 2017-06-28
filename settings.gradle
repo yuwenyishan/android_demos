@@ -1,2 +1,2 @@
-include ':ConstraintLayout', ':BaseDepend', ':RxDemo', ':SpringAnimation', ':ShortcutDemo',
+include ':ConstraintLayout', ':BaseDepend', ':RxDemo', ':SpringAnimation', ':ShortcutDemo', ':ContentProviderSample',
         ':RealmDemo', ':DownloadManager', ':FileProvider', ':ContentProvider'

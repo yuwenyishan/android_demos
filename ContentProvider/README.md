@@ -188,3 +188,37 @@ public class JaxProvider extends ContentProvider {
                 int sss = contentResolver.update(Uri.withAppendedPath(Profile.CONNECT_URI, "/" + id2), cv1, null, null);
                 Log.d(TAG, "update success : " + sss);
 ```
+
+## 跨进程访问
+
+如果需要将自己程序中的provider暴露给其它程序，则需要折这该provider外部可访问并提供相关权限
+```
+<permission
+        android:name="com.ytxx.JaxProvider.Read"
+        android:protectionLevel="normal" />
+<permission
+    android:name="com.ytxx.JaxProvider.Write"
+    android:protectionLevel="normal" />
+        
+<provider
+    android:name="com.ytxx.contentprovider.provider.JaxProvider"
+    android:authorities="${applicationId}.JaxProvider"
+    android:exported="true"
+    android:readPermission="com.ytxx.JaxProvider.Read"
+    android:writePermission="com.ytxx.JaxProvider.Write" />
+```
+
+如上 **android:exported="true"** 允许了外部程序可以访问，如若不添加自己的权限则外部应用都可以访问该provide，这是不安全的
+所以一般会添加 
+
+**android:Permission=""** 
+
+或者
+
+**android:readPermission** **android:writePermission** 
+
+并在manifest中声明该权限，当其它应用在manifest中请求该权限时方可使用。
+```
+    <uses-permission android:name="com.ytxx.JaxProvider.Read" />
+    <uses-permission android:name="com.ytxx.JaxProvider.Write" />
+```

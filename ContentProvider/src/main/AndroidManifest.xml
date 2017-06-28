@@ -2,11 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ytxx.contentprovider">
 
+    <permission
+        android:name="com.ytxx.JaxProvider.Read"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.ytxx.JaxProvider.Write"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:fullBackupContent="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -31,7 +38,9 @@
         <provider
             android:name="com.ytxx.contentprovider.provider.JaxProvider"
             android:authorities="${applicationId}.JaxProvider"
-            android:exported="false" />
+            android:exported="true"
+            android:readPermission="com.ytxx.JaxProvider.Read"
+            android:writePermission="com.ytxx.JaxProvider.Write" />
     </application>
 
 </manifest>
