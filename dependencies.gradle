@@ -33,6 +33,9 @@ ext {
             fresco               : "com.facebook.fresco:fresco:$frescoVersion",
             frescoOkhttp         : "com.facebook.fresco:imagepipeline-okhttp3:$frescoVersion",
             fresco_gif           : "com.facebook.fresco:animated-gif:$frescoVersion",
-            constraintLayout     : "com.android.support.constraint:constraint-layout:$constraintlayoutVersion"
+            constraintLayout     : "com.android.support.constraint:constraint-layout:$constraintlayoutVersion",
+            //butterknife
+            butterknife          : 'com.jakewharton:butterknife:8.5.1',
+            butterknifeCompiler  : 'com.jakewharton:butterknife-compiler:8.5.1'
     ]
 }
