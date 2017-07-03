@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AidlClient/AidlClient.iml" filepath="$PROJECT_DIR$/AidlClient/AidlClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AidlService/AidlService.iml" filepath="$PROJECT_DIR$/AidlService/AidlService.iml" />
       <module fileurl="file://$PROJECT_DIR$/BaseDepend/BaseDepend.iml" filepath="$PROJECT_DIR$/BaseDepend/BaseDepend.iml" />
       <module fileurl="file://$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" filepath="$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/ContentProvider/ContentProvider.iml" filepath="$PROJECT_DIR$/ContentProvider/ContentProvider.iml" />
