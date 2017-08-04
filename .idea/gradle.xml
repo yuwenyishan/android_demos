@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/RxDemo" />
             <option value="$PROJECT_DIR$/ShortcutDemo" />
             <option value="$PROJECT_DIR$/SpringAnimation" />
+            <option value="$PROJECT_DIR$/XmlParseDemo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

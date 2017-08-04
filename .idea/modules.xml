@@ -3,18 +3,32 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AidlClient/AidlClient.iml" filepath="$PROJECT_DIR$/AidlClient/AidlClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AidlClient/AidlClient.iml" filepath="$PROJECT_DIR$/AidlClient/AidlClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AidlService/AidlService.iml" filepath="$PROJECT_DIR$/AidlService/AidlService.iml" />
       <module fileurl="file://$PROJECT_DIR$/AidlService/AidlService.iml" filepath="$PROJECT_DIR$/AidlService/AidlService.iml" />
       <module fileurl="file://$PROJECT_DIR$/BaseDepend/BaseDepend.iml" filepath="$PROJECT_DIR$/BaseDepend/BaseDepend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BaseDepend/BaseDepend.iml" filepath="$PROJECT_DIR$/BaseDepend/BaseDepend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" filepath="$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" filepath="$PROJECT_DIR$/ConstraintLayout/ConstraintLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/ContentProvider/ContentProvider.iml" filepath="$PROJECT_DIR$/ContentProvider/ContentProvider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ContentProvider/ContentProvider.iml" filepath="$PROJECT_DIR$/ContentProvider/ContentProvider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ContentProviderSample/ContentProviderSample.iml" filepath="$PROJECT_DIR$/ContentProviderSample/ContentProviderSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/ContentProviderSample/ContentProviderSample.iml" filepath="$PROJECT_DIR$/ContentProviderSample/ContentProviderSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/Demos.iml" filepath="$PROJECT_DIR$/Demos.iml" />
       <module fileurl="file://$PROJECT_DIR$/DownloadManager/DownloadManager.iml" filepath="$PROJECT_DIR$/DownloadManager/DownloadManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DownloadManager/DownloadManager.iml" filepath="$PROJECT_DIR$/DownloadManager/DownloadManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileProvider/FileProvider.iml" filepath="$PROJECT_DIR$/FileProvider/FileProvider.iml" />
       <module fileurl="file://$PROJECT_DIR$/FileProvider/FileProvider.iml" filepath="$PROJECT_DIR$/FileProvider/FileProvider.iml" />
       <module fileurl="file://$PROJECT_DIR$/RealmDemo/RealmDemo.iml" filepath="$PROJECT_DIR$/RealmDemo/RealmDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RealmDemo/RealmDemo.iml" filepath="$PROJECT_DIR$/RealmDemo/RealmDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RxDemo/RxDemo.iml" filepath="$PROJECT_DIR$/RxDemo/RxDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/RxDemo/RxDemo.iml" filepath="$PROJECT_DIR$/RxDemo/RxDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/ShortcutDemo/ShortcutDemo.iml" filepath="$PROJECT_DIR$/ShortcutDemo/ShortcutDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ShortcutDemo/ShortcutDemo.iml" filepath="$PROJECT_DIR$/ShortcutDemo/ShortcutDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpringAnimation/SpringAnimation.iml" filepath="$PROJECT_DIR$/SpringAnimation/SpringAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringAnimation/SpringAnimation.iml" filepath="$PROJECT_DIR$/SpringAnimation/SpringAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/XmlParseDemo/XmlParseDemo.iml" filepath="$PROJECT_DIR$/XmlParseDemo/XmlParseDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_demos.iml" filepath="$PROJECT_DIR$/android_demos.iml" />
     </modules>
   </component>
 </project>
