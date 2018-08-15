@@ -33,8 +33,8 @@ public class ConstraintAnimator extends BaseActivity {
 
     public void onApplyClick(View view) {
 //        marginConnect();
-//        chainPacked();
-        testConnect();
+        chainPacked();
+//        testConnect();
         applyConstraintSet.applyTo(constraintLayout);
     }
 
