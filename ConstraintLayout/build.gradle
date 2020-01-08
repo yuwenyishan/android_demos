@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
-    buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "com.jax.demos"
@@ -23,14 +21,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
     Map<String, String> dependencies = rootProject.ext.dependencies
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile dependencies.appCompat
-    testCompile dependencies.jUnit
-    compile project(':BaseDepend')
-    compile dependencies.constraintLayout
-    compile 'com.android.support:transition:25.3.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation dependencies.appCompat
+    testImplementation dependencies.jUnit
+    implementation project(':BaseDepend')
+    implementation dependencies.constraintLayout
+    implementation 'com.android.support:transition:25.3.0'
 }

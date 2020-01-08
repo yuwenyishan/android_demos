@@ -17,6 +17,7 @@
       <module fileurl="file://$PROJECT_DIR$/SpringAnimation/SpringAnimation.iml" filepath="$PROJECT_DIR$/SpringAnimation/SpringAnimation.iml" />
       <module fileurl="file://$PROJECT_DIR$/XmlParseDemo/XmlParseDemo.iml" filepath="$PROJECT_DIR$/XmlParseDemo/XmlParseDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/android_demos.iml" filepath="$PROJECT_DIR$/android_demos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lottiedemo/lottiedemo.iml" filepath="$PROJECT_DIR$/lottiedemo/lottiedemo.iml" />
     </modules>
   </component>
 </project>

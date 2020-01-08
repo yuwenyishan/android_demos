@@ -1,2 +1,2 @@
-include ':ConstraintLayout', ':BaseDepend', ':RxDemo', ':SpringAnimation', ':ShortcutDemo', ':ContentProviderSample', ':AidlService', ':AidlClient', ':XmlParseDemo', ':AsyncListUtilDemo',
+include ':ConstraintLayout', ':BaseDepend', ':RxDemo', ':SpringAnimation', ':ShortcutDemo', ':ContentProviderSample', ':AidlService', ':AidlClient', ':XmlParseDemo', ':AsyncListUtilDemo', ':lottiedemo',
         ':RealmDemo', ':DownloadManager', ':FileProvider', ':ContentProvider'

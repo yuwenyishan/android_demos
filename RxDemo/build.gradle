@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
-    buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "com.jax.reactivex"
@@ -25,20 +23,21 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
     Map<String, String> dependencies = rootProject.ext.dependencies
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile dependencies.appCompat
-    compile dependencies.support
-    compile dependencies.design
-    compile dependencies.cardView
-    compile dependencies.rxJava
-    compile dependencies.rxJavaAsyncUtil
-    compile dependencies.rxAndroid
-    compile dependencies.rxBinding
-    testCompile dependencies.jUnit
-    compile dependencies.constraintLayout
-    compile project(':BaseDepend')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation dependencies.appCompat
+    implementation dependencies.support
+    implementation dependencies.design
+    implementation dependencies.cardView
+    implementation dependencies.rxJava
+    implementation dependencies.rxJavaAsyncUtil
+    implementation dependencies.rxAndroid
+    implementation dependencies.rxBinding
+    testImplementation dependencies.jUnit
+    implementation dependencies.constraintLayout
+    implementation project(':BaseDepend')
 }
